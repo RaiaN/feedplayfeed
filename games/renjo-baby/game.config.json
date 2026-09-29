@@ -1,0 +1,15 @@
+{
+  "roundSeconds": 60,
+  "meters": { "start": 60, "max": 100, "drainStart": 0.9, "drainEnd": 2.2, "timeout": -10 },
+  "cards": { "timerStart": 4.2, "timerEnd": 2.2, "gap": 0.3, "climaxTimer": 4.5 },
+  "balance": { "tipAt": 45, "tipSeconds": 2.5, "balancedWithin": 15 },
+  "scoring": {
+    "positive": 100,
+    "justInTime": 50,
+    "justInTimeFrac": 0.25,
+    "balancedPerSecond": 20,
+    "streakPerLevel": 3,
+    "maxMultiplier": 5,
+    "finishBonus": 300
+  }
+}

@@ -330,9 +330,9 @@ export class DuoRenderer {
       // Who this answer affects (not which way: that's the skill).
       ctx.fillStyle = PEOPLE[o.who].body;
       ctx.beginPath();
-      ctx.roundRect(x + 8, BTN_Y + 8, 58, 26, 13);
+      ctx.roundRect(x + 8, BTN_Y + 7, 64, 28, 14);
       ctx.fill();
-      drawText(ctx, this.name(o.who), x + 37, BTN_Y + 22, { size: 18, color: '#10151c' });
+      drawText(ctx, this.name(o.who), x + 40, BTN_Y + 22, { size: 20, color: '#10151c' });
       const text = this.strings.t(sim.shownKey(side));
       const tl = wrapText(ctx, text, 20, w - 16, 2);
       tl.forEach((l, i) =>
@@ -408,17 +408,25 @@ export class DuoRenderer {
   }
 
   private drawPopups(ctx: CanvasRenderingContext2D, v: RenderView): void {
-    for (const p of this.popups) {
+    this.popups.forEach((p, i) => {
+      // Stack labels that would overlap (quick answers in a row).
+      const stack = this.popups.slice(0, i).filter((q) => Math.abs(q.x - p.x) < 140 && p.born - q.born < 0.8).length;
       const t = (v.time - p.born) / 1.1;
       ctx.font = `bold 20px ${FONT_STACK}`;
       const half = Math.min(170, ctx.measureText(p.text).width / 2 + 6);
       ctx.globalAlpha = v.reducedMotion ? 1 : 1 - t * t;
-      drawText(ctx, p.text, clamp(p.x, half, 360 - half), clamp(p.y, 150, 320) - (v.reducedMotion ? 0 : t * 18), {
-        size: 20,
-        color: p.color,
-        outline: 'rgba(255,255,255,0.9)',
-      });
-    }
+      drawText(
+        ctx,
+        p.text,
+        clamp(p.x, half, 360 - half),
+        clamp(p.y + stack * 26, 150, 330) - (v.reducedMotion ? 0 : t * 18),
+        {
+          size: 20,
+          color: p.color,
+          outline: 'rgba(255,255,255,0.9)',
+        },
+      );
+    });
     ctx.globalAlpha = 1;
   }
 }

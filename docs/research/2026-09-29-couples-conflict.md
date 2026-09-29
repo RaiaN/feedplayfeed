@@ -44,3 +44,15 @@ The core loop of each game *is* the finding, not a label stuck on it.
 - All ages: no romance or sexual content, no insults in text (barbs are symbols, not words), no gore.
 - Characters are two stylised, gender-neutral partners.
 - Colour is never the only cue: shapes differ (round bids vs square phones; thorn, eye-roll, shield, brick, heart).
+
+## Addendum: the Ren & Jo series (life situations)
+| Fact | Source |
+|---|---|
+| The top sources of couple conflict come from *outside* the relationship: money, chores, finding time together, in-laws, parenting (Bradbury & Karney, UCLA). A YouGov survey: tone 39%, money 28%, communication 26%, chores 21%, family/in-laws 20%, parenting 15%. | https://www.psychologytoday.com/us/blog/between-you-and-me/202106/what-do-couples-fight-about , https://www.connectedcouples.app/blog/relationship-conflict-statistics |
+| Money fights are among the most destructive (one survey ranks them the 2nd leading cause of divorce). This is a survey claim, not a peer-reviewed finding. | https://www.connectedcouples.app/blog/relationship-conflict-statistics |
+| About 67% of couples see relationship satisfaction dip in the first 3 years after a baby (Shapiro, Gottman & Carrère; 82 newlywed couples followed 4–6 years). | https://www.washington.edu/news/2001/08/07/200-expectant-couples-sought-for-baby-makes-three-study-free-workshop-on-improving-marital-satisfaction , https://www.psychologytoday.com/us/blog/preparing-for-parenthood/202303/when-couples-become-parents-the-impact-on-your-relationship |
+| Accepting influence (letting your partner influence you) is linked with happier, more stable marriages. UNVERIFIED: the often-quoted "81%" figure was not found in these search results, so we don't use it. | https://gottman.com/blog/the-mutual-benefits-of-accepting-influence-in-relationships |
+| Stress-reducing conversation: listen, ask questions and empathise ("It makes sense you feel that"); don't rush to solve. | https://www.vermontpublic.org/vpr-news/2020-04-21/isolating-with-a-partner-relationship-therapists-share-stress-reduction-strategies |
+| Aftermath of a fight: process a regrettable incident from emotional distance, "like an audience". Couples who do this build stronger bonds. | https://www.gottman.com/blog/how-we-used-the-aftermath-of-a-fight-to-repair-our-relationship/ , https://couplestherapyinc.com/aftermath-of-a-fight-the-gottman-model/ |
+
+How these shape the series is in `docs/series/ren-and-jo.md`.

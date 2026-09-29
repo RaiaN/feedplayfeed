@@ -96,6 +96,14 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 - [x] Demos: `games/wolfnight` (tap to flash wolves back), `games/hawkshadow` (hold to run, release to freeze), `games/sharkwake` (tap left/right to dodge a chasing fin)
 - [ ] Put the 3 demos in front of real players (a Devvit playtest after Session 3) and compare D1 × share rate against `tidewall`
 
+## Couples track (2026-09-29)
+- [x] Couples research brief with sources: `docs/research/2026-09-29-couples-conflict.md`
+- [x] `games/littlemoments` (bids for connection, 86% vs 33%) and `games/floodline` (flooding, horsemen and antidotes, repair, 5:1)
+- [x] `templates/duo-balance` plus the Ren & Jo series bible `docs/series/ren-and-jo.md`
+- [x] Situations: `renjo-moving`, `renjo-money`, `renjo-baby`
+- [ ] Next situations: `renjo-holiday` (in-laws, the Chasm), `renjo-busy` (the Shallows), `renjo-job`, `renjo-sick`, `renjo-aftermath`
+- [ ] Playtest the text-card readability vs the 3-second rule; tune timers
+
 ## Concept seeds
 These are original starting points. Do a name/IP check before any release.
 1. ~~**Tidewall**~~ (score-attack, used: `games/tidewall`, Session 1): hold to raise a seawall segment, release to lock it. Waves arrive in seeded patterns, and perfect locks chain multipliers.
