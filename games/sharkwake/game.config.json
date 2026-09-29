@@ -1,0 +1,39 @@
+{
+  "roundSeconds": 60,
+  "surfer": {
+    "screenY": 400,
+    "lanes": [80, 180, 280],
+    "laneSpeed": 1100,
+    "hitHalfWidth": 34
+  },
+  "speed": {
+    "start": 230,
+    "end": 360,
+    "slowFactor": 0.55,
+    "slowSeconds": 0.6
+  },
+  "fin": {
+    "startGap": 130,
+    "maxGap": 145,
+    "closeStart": 7,
+    "closeEnd": 15,
+    "hitPenalty": 45
+  },
+  "rows": {
+    "firstAt": 260,
+    "spacingStart": 250,
+    "spacingEnd": 165,
+    "doubleChanceEnd": 0.55,
+    "boostChance": 0.5
+  },
+  "scoring": {
+    "pxPerPoint": 10,
+    "nearMiss": 100,
+    "nearMissWindow": 0.35,
+    "nearMissGap": 10,
+    "boost": 25,
+    "boostGap": 24,
+    "shoreBonus": 300,
+    "maxMultiplier": 5
+  }
+}

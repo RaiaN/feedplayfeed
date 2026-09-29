@@ -1,0 +1,22 @@
+{
+  "meta.title": "Shark Wake",
+  "hud.beat": "Beat {score}",
+  "hud.meters": "{m} m",
+  "fx.near": "Near miss!",
+  "fx.boost": "Wave!",
+  "fx.hit": "Bonk!",
+  "fx.shore": "Shore!",
+  "end.title": "Session over",
+  "end.caught": "Wiped out · {meters}m",
+  "end.survived": "Made it to shore!",
+  "end.titleBeat": "Challenge beaten!",
+  "end.best": "Best {best} · {nearMisses} near misses",
+  "end.again": "Paddle again",
+  "end.share": "Share score",
+  "end.challenge": "Challenge a friend",
+  "share.score": "A fin chased me {meters}m on Shark Wake: {nearMisses} near misses, {score} points. Can you make shore?",
+  "share.challenge": "Same sea, same fin. I scored {score}. Your turn.",
+  "toast.shared": "Shared!",
+  "toast.copied": "Link copied",
+  "toast.failed": "Couldn't share"
+}
