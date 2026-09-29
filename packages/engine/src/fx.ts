@@ -18,7 +18,7 @@ export function drawVignette(
   const inner = outer * (1 - s) * 0.9;
   const g = ctx.createRadialGradient(cx, cy, Math.max(1, inner), cx, cy, outer);
   g.addColorStop(0, `rgba(${color},0)`);
-  g.addColorStop(1, `rgba(${color},${0.35 + 0.6 * s})`);
+  g.addColorStop(1, `rgba(${color},${0.9 * s})`);
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
 }

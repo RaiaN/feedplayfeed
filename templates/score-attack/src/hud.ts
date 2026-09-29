@@ -54,6 +54,7 @@ export function drawEndCard(
     {
       size: 24,
       color: p.text,
+      maxWidth: 296,
     },
   );
   const score = String(c.round.score);

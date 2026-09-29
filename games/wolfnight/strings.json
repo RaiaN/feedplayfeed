@@ -1,0 +1,20 @@
+{
+  "meta.title": "Wolf Night",
+  "hud.beat": "Beat {score}",
+  "fx.close": "Close call!",
+  "fx.back": "Back!",
+  "fx.dawn": "Dawn!",
+  "end.title": "Night's over",
+  "end.caught": "Caught in the dark · {seconds}s",
+  "end.survived": "You saw the dawn!",
+  "end.titleBeat": "Challenge beaten!",
+  "end.best": "Best {best} · {closeCalls} close calls",
+  "end.again": "Try again",
+  "end.share": "Share score",
+  "end.challenge": "Challenge a friend",
+  "share.score": "I lasted {seconds}s in the dark woods on Wolf Night: {closeCalls} close calls, {score} points. Can you make it to dawn?",
+  "share.challenge": "The wolves came for me after {seconds}s ({score} points). Same night, same wolves. Beat me.",
+  "toast.shared": "Shared!",
+  "toast.copied": "Link copied",
+  "toast.failed": "Couldn't share"
+}

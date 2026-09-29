@@ -1,0 +1,44 @@
+{
+  "roundSeconds": 60,
+  "girl": {
+    "x": 180,
+    "y": 390,
+    "catchRadius": 24
+  },
+  "lantern": {
+    "minRadius": 64,
+    "maxRadius": 150,
+    "drainPerSecond": 0.01,
+    "flashCost": 0.05,
+    "flashRange": 360,
+    "flashConeDeg": 50,
+    "cooldown": 0.2
+  },
+  "wolves": {
+    "startCount": 3,
+    "spawnStart": 1.9,
+    "spawnEnd": 0.65,
+    "speedStart": 40,
+    "speedEnd": 85,
+    "spawnDistance": 320,
+    "pushBack": 170,
+    "retreatSpeed": 700,
+    "stun": 0.6,
+    "max": 9
+  },
+  "fireflies": {
+    "every": 4,
+    "life": 4.5,
+    "oil": 0.28,
+    "tapRadius": 36
+  },
+  "scoring": {
+    "perSecond": 10,
+    "push": 10,
+    "closeCall": 50,
+    "closeCallRadius": 80,
+    "firefly": 20,
+    "dawnBonus": 300,
+    "maxMultiplier": 5
+  }
+}
