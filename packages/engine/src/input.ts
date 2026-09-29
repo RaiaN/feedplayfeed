@@ -27,11 +27,17 @@ export class Input implements InputState {
   taps: Point[] = [];
   private keysDown = new Set<string>();
   private pointersDown = new Set<number>();
-  private listeners: Array<() => void> = [];
+  private firstListeners: Array<() => void> = [];
+  private pressListeners: Array<() => void> = [];
 
-  /** Called once on the very first press of any kind (used for first_input + audio unlock). */
+  /** Called once, on the very first press of any kind (first_input analytics). */
   onFirstPress(cb: () => void): void {
-    this.listeners.push(cb);
+    this.firstListeners.push(cb);
+  }
+
+  /** Called synchronously inside every press event, i.e. within the user gesture (audio unlock). */
+  onPress(cb: () => void): void {
+    this.pressListeners.push(cb);
   }
 
   pointerDown(id: number, p: Point): void {
@@ -84,9 +90,10 @@ export class Input implements InputState {
       this.held = true;
       this.pressed = true;
     }
-    const first = this.listeners;
-    this.listeners = [];
+    const first = this.firstListeners;
+    this.firstListeners = [];
     for (const cb of first) cb();
+    for (const cb of this.pressListeners) cb();
   }
 
   private maybeRelease(): void {

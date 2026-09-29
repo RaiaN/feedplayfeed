@@ -1,0 +1,14 @@
+{
+  "name": "@feedplay/template-score-attack",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@feedplay/analytics": "*",
+    "@feedplay/engine": "*",
+    "@feedplay/platform": "*"
+  }
+}

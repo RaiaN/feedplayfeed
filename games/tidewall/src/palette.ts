@@ -1,0 +1,21 @@
+// Okabe–Ito based, colorblind-safe. Every grade also has a distinct shape (star / check / up-arrow / X),
+// so color is never the only signal.
+export const colors = {
+  night: '#0b2239',
+  sea: '#12406a',
+  seaDeep: '#0e3355',
+  foam: '#e8f4ff',
+  wave: '#56b4e9',
+  target: '#f0e442',
+  wallRising: '#e69f00',
+  wallLocked: '#d9cba3',
+  wallShade: '#a8987a',
+  ground: '#3b2f25',
+  perfect: '#009e73',
+  good: '#56b4e9',
+  over: '#cc79a7',
+  breach: '#d55e00',
+  text: '#ffffff',
+  muted: '#b9cde0',
+  panel: '#15324f',
+} as const;

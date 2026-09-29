@@ -1,0 +1,26 @@
+# Tidewall: release steps
+
+Everything here needs a human (logins, uploads). Build output is in `games/tidewall/dist/` after `npm run build`.
+
+## Local play
+```bash
+npm ci
+npm run dev -w games/tidewall        # http://localhost:5173 (also on your LAN IP for a phone)
+# test flags: ?adapter=mock&test=1 · ?autoplay=1&speed=4 · challenge: ?c=<seed>&s=<score>
+```
+
+## Web (any static host), available now
+1. `npm run build -w games/tidewall`
+2. Upload the contents of `games/tidewall/dist/` to any static host. Paths are relative, so a subfolder works.
+
+## Reddit Devvit: after Session 3
+The wrapper (`platforms/devvit`) and `npm run package:devvit -- tidewall` don't exist yet. Session 3 will add the exact `npm run login` / playtest / deploy / launch commands here.
+
+## Facebook Instant Games: after Session 4
+`npm run package:fbinstant -- tidewall` → `out/fbinstant/tidewall.zip` doesn't exist yet. Session 4 will add the App Dashboard upload steps here.
+
+## Portals (CrazyGames, Poki): after Session 5
+Adapters are pending. Poki docs are blocked from cloud sessions (see `docs/OPEN_QUESTIONS.md`).
+
+## Before any public release
+- [ ] Name/IP check for "Tidewall" (see `docs/HUMAN_TASKS.md`)

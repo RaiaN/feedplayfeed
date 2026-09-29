@@ -1,0 +1,19 @@
+{
+  "meta.title": "Tidewall",
+  "hud.beat": "Beat {score}",
+  "grade.perfect": "Perfect",
+  "grade.good": "Good",
+  "grade.over": "Too high",
+  "grade.breach": "Breach!",
+  "end.title": "Tide's out",
+  "end.titleBeat": "Challenge beaten!",
+  "end.best": "Best {best} · perfect streak {chain}",
+  "end.again": "Play again",
+  "end.share": "Share score",
+  "end.challenge": "Challenge a friend",
+  "share.score": "I held back the tide for {score} points on Tidewall (perfect streak {chain}). Same waves for everyone today.",
+  "share.challenge": "Beat my {score} on Tidewall. Same waves, your turn.",
+  "toast.shared": "Shared!",
+  "toast.copied": "Link copied",
+  "toast.failed": "Couldn't share"
+}

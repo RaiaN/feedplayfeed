@@ -1,0 +1,21 @@
+{
+  "roundSeconds": 45,
+  "segments": 5,
+  "riseSpeed": 0.85,
+  "waves": {
+    "minCrest": 0.2,
+    "maxCrest": 0.9,
+    "travelStart": 2.6,
+    "travelEnd": 1.4,
+    "gapStart": 0.7,
+    "gapEnd": 0.25
+  },
+  "scoring": {
+    "perfectWindow": 0.05,
+    "goodWindow": 0.16,
+    "perfectPoints": 100,
+    "goodPoints": 40,
+    "overPoints": 10,
+    "maxMultiplier": 8
+  }
+}
