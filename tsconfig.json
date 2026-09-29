@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "templates/*/src/**/*.ts",
+    "games/*/src/**/*.ts",
+    "games/*/e2e/**/*.ts",
+    "games/*/vite.config.ts",
+    "tools/**/*.ts",
+    "*.config.ts"
+  ]
+}

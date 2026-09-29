@@ -1,0 +1,39 @@
+{
+  "name": "feedplay-factory",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "templates/*",
+    "games/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Usage: npm run dev -w games/<slug>' && exit 1",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "size": "node tools/size/check-size.mjs",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build && npm run size",
+    "e2e": "npm run build && playwright test --pass-with-no-tests",
+    "new-game": "node tools/new-game/index.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.56.1",
+    "@types/node": "22.20.4",
+    "eslint": "10.11.0",
+    "globals": "17.12.0",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  }
+}
