@@ -13,5 +13,8 @@ export const layout = {
   challenge: { x: 44, y: 500, w: 272, h: 54 },
 } satisfies Record<string, Rect>;
 
-/** Minimum logical font size. At the narrowest supported viewport (320 CSS px) this is still ≥16 CSS px. */
-export const MIN_FONT = 18;
+/**
+ * Minimum logical font size. The canvas fit scale is min(vw/360, vh/640); at 20 units text stays ≥16 CSS px
+ * down to a scale of 0.8 (e.g. 320×568, or 375×548 with mobile browser toolbars).
+ */
+export const MIN_FONT = 20;

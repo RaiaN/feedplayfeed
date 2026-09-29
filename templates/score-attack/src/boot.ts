@@ -13,7 +13,7 @@ import {
 } from '@feedplay/platform';
 import { ScoreAttackController } from './controller.ts';
 import { drawEndCard, drawHud, drawToast } from './hud.ts';
-import { H, W } from './layout.ts';
+import { H, MIN_FONT, W } from './layout.ts';
 import type { ScoreAttackGame } from './types.ts';
 
 export interface BootOptions {
@@ -50,6 +50,7 @@ export async function bootScoreAttack(opts: BootOptions): Promise<ScoreAttackCon
   host.onError((message) => analytics.track('error', { message }));
 
   const strings = createStrings(opts.strings);
+  if (strings.has('meta.title')) document.title = strings.t('meta.title');
   const adapter = pickAdapter(params, opts.adapter);
   await adapter.init();
   adapter.setLoadingProgress(50);
@@ -142,6 +143,10 @@ export async function bootScoreAttack(opts: BootOptions): Promise<ScoreAttackCon
       },
       get fontScale() {
         return host.scale;
+      },
+      minFont: MIN_FONT,
+      get summary() {
+        return controller.round.summary();
       },
     });
   }

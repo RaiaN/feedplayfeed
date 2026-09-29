@@ -54,9 +54,10 @@ export function drawEndCard(
   drawText(ctx, score, W / 2, 230, { size: 72, color: p.primary });
   const scoreW = ctx.measureText(score).width;
   drawText(ctx, strings.t('end.best', { ...c.round.summary(), best: c.best }), W / 2, 290, {
-    size: 20,
+    size: MIN_FONT,
     color: p.muted,
     weight: 'normal',
+    maxWidth: 296,
   });
   if (c.newBest) drawText(ctx, '★', W / 2 + scoreW / 2 + 22, 206, { size: 32, color: p.primary });
 
@@ -75,7 +76,7 @@ export function drawToast(ctx: CanvasRenderingContext2D, c: ScoreAttackControlle
   roundRect(ctx, 60, 572, 240, 40, 20);
   ctx.fillStyle = p.text;
   ctx.fill();
-  drawText(ctx, c.toast.text, W / 2, 593, { size: MIN_FONT, color: p.background });
+  drawText(ctx, c.toast.text, W / 2, 593, { size: MIN_FONT, color: p.background, maxWidth: 230 });
 }
 
 function toggleBg(ctx: CanvasRenderingContext2D, r: Rect, p: Palette): void {

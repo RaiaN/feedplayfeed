@@ -17,7 +17,7 @@
 | Monetization hooks (later) | Rewarded "second chance" on one breach; cosmetic wall skins. None in v1. |
 | Art direction | Calm, chunky, tactile. Palette (Okabe–Ito based): night `#0b2239`, sea `#12406a`, wave `#56b4e9`, target `#f0e442`, wall `#d9cba3` / rising `#e69f00`, perfect `#009e73`, over `#cc79a7`, breach `#d55e00`. Flat rectangles, brick lines, curved foam crest; no external assets. |
 | Audio | Procedural WebAudio: rising tick, perfect chime, good blip, low "too high" buzz, breach noise splash. Sound on after first tap; mute toggle persists. |
-| Accessibility | Colorblind-safe palette, and every grade has a shape (★ perfect, ✓ good, ↑ too high, ✕ breach) plus a word. Reduced-motion toggle (defaults to OS setting): no shake, particles or bobbing. Min text 18 logical px (≥16 CSS px at 320 px width). |
+| Accessibility | Colorblind-safe palette, and every grade has a shape (★ perfect, ✓ good, ↑ too high, ✕ breach) plus a word. Reduced-motion toggle (defaults to OS setting): no shake, particles or bobbing. Min text 20 logical px (≥16 CSS px down to a 320×568 viewport). |
 | Name/IP check | Not yet: logged in `docs/HUMAN_TASKS.md` (2026-09-29) |
 | Success metric (7 days) | D1 ≥ 20%, share rate ≥ 5%, median session ≥ 90 s |
 | Kill rule | D1 < 12% or share rate < 1.5% after 1,000 players |
@@ -27,7 +27,7 @@
 |---|---|---|---|
 | `roundSeconds` | 45 | 30–90 | Round length |
 | `segments` | 5 | 3–7 | Lanes / wall segments across the screen |
-| `riseSpeed` | 0.85 | 0.6–1.2 | Wall heights per second while holding; higher = harder to be precise |
+| `riseSpeed` | 0.85 | 0.65–1.2 (must reach `maxCrest` within `travelEnd`) | Wall heights per second while holding; higher = harder to be precise |
 | `waves.minCrest` / `maxCrest` | 0.2 / 0.9 | 0.1–1 | Crest line height range |
 | `waves.travelStart` / `travelEnd` | 2.6 / 1.4 s | 1.1–3.5 | Wave travel time at round start / end (ramp) |
 | `waves.gapStart` / `gapEnd` | 0.7 / 0.25 s | 0–1.5 | Pause between waves (ramp) |

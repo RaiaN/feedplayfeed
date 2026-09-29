@@ -8,6 +8,8 @@ interface Hook {
   events: Array<{ name: string; props: Record<string, unknown> }>;
   calls: Array<{ method: string; args: unknown[] }>;
   fontScale: number;
+  minFont: number;
+  summary: Record<string, number>;
 }
 
 const hook = (page: Page) => page.evaluate(() => JSON.parse(JSON.stringify((window as never)['__feedplay'])) as Hook);
@@ -29,12 +31,15 @@ test('loads, takes input, finishes a round, submits the score and shares', async
   const box = (await canvas.boundingBox())!;
   // 9:16 portrait, fitted to the 390×844 viewport.
   expect(box.width / box.height).toBeCloseTo(9 / 16, 1);
-  // Text ≥16 CSS px: the template's 18-unit minimum font times the fit scale.
-  expect(18 * (await hook(page)).fontScale).toBeGreaterThanOrEqual(16);
+  // Text ≥16 CSS px: the template's minimum font times the fit scale.
+  const { minFont, fontScale } = await hook(page);
+  expect(minFont * fontScale).toBeGreaterThanOrEqual(16);
 
   // First input: a tap in the play field.
   await canvas.tap({ position: { x: box.width / 2, y: box.height * 0.7 } });
   await expect.poll(async () => (await hook(page)).events.some((e) => e.name === 'first_input')).toBe(true);
+  const firstInput = (await hook(page)).events.find((e) => e.name === 'first_input')!;
+  expect(firstInput.props.ms).toBeLessThanOrEqual(3000);
 
   // Autoplay (bot) finishes the round at 10× speed.
   await expect.poll(async () => (await hook(page)).phase, { timeout: 20_000 }).toBe('end');
@@ -77,4 +82,31 @@ test('a challenge link replays the challenge seed', async ({ page }) => {
   const state = await hook(page);
   expect(state.seed).toBe('friend-seed-42');
   expect(state.events.find((e) => e.name === 'challenge_open')?.props).toEqual({ seed: 'friend-seed-42' });
+});
+
+test('a human hold raises the wall (no autoplay)', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/?adapter=mock&test=1');
+  await page.waitForFunction(() => (window as never)['__feedplay'] !== undefined);
+  const box = (await page.locator('canvas').boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height * 0.7);
+  await page.mouse.down();
+  await expect.poll(async () => (await hook(page)).phase).toBe('play');
+  await page.waitForTimeout(400);
+  await page.mouse.up();
+  const state = await hook(page);
+  expect(state.events.map((e) => e.name)).toEqual(expect.arrayContaining(['first_input', 'round_start']));
+  expect(state.summary.raises).toBe(1);
+  expect(errors).toEqual([]);
+});
+
+test.describe('small phone (320×568)', () => {
+  test.use({ viewport: { width: 320, height: 568 } });
+  test('keeps text ≥16 CSS px', async ({ page }) => {
+    await page.goto('/?adapter=mock&test=1');
+    await page.waitForFunction(() => (window as never)['__feedplay'] !== undefined);
+    const { minFont, fontScale } = await hook(page);
+    expect(minFont * fontScale).toBeGreaterThanOrEqual(16);
+  });
 });

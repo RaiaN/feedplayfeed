@@ -95,8 +95,7 @@ export class TidewallRenderer {
         // Older walls sink back as each new wave comes in.
         this.laneFade = this.laneFade.map((h) => h * 0.6);
       } else if (e.type === 'lock') {
-        const lane = this.sim.wave?.lane;
-        if (lane !== undefined) this.laneFade[lane] = e.height;
+        this.laneFade[e.lane] = e.height;
       } else if (e.type === 'impact') {
         this.popups.push({ grade: e.grade, lane: e.lane, points: e.points, born: v.time });
         if (e.grade === 'breach') this.shakeUntil = v.time + 0.35;
@@ -194,7 +193,7 @@ export class TidewallRenderer {
       ctx.globalAlpha = v.reducedMotion ? 1 : 1 - t * t;
       drawGradeIcon(ctx, p.grade, cx, y - 34, color);
       drawText(ctx, this.strings.t(`grade.${p.grade}`), cx, y, { size: 22, color });
-      if (p.points > 0) drawText(ctx, `+${p.points}`, cx, y + 26, { size: 18, color: colors.text });
+      if (p.points > 0) drawText(ctx, `+${p.points}`, cx, y + 26, { size: 20, color: colors.text });
     }
     ctx.globalAlpha = 1;
   }

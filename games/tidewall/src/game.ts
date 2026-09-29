@@ -56,7 +56,12 @@ export class TidewallRound implements ScoreAttackRound {
   }
 
   summary(): Record<string, string | number> {
-    return { chain: this.sim.bestChain, perfects: this.sim.perfects, breaches: this.sim.breaches };
+    return {
+      chain: this.sim.bestChain,
+      perfects: this.sim.perfects,
+      breaches: this.sim.breaches,
+      raises: this.sim.raises,
+    };
   }
 }
 

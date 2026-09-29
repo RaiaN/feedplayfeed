@@ -31,7 +31,10 @@ export interface TidewallConfig {
 export function validateConfig(c: TidewallConfig): TidewallConfig {
   const errors: string[] = [];
   if (c.roundSeconds < 30 || c.roundSeconds > 90) errors.push('roundSeconds must be 30–90');
-  if (c.segments < 1 || c.segments > 7) errors.push('segments must be 1–7');
+  if (!Number.isInteger(c.segments) || c.segments < 3 || c.segments > 7) errors.push('segments must be 3–7');
+  const w = c.waves;
+  if (!(c.riseSpeed > 0 && w.travelStart > 0 && w.travelEnd > 0 && w.gapStart >= 0 && w.gapEnd >= 0))
+    errors.push('riseSpeed/travel must be > 0 and gaps ≥ 0');
   if (!(c.waves.minCrest > 0 && c.waves.minCrest < c.waves.maxCrest && c.waves.maxCrest <= 1))
     errors.push('waves crest range must be 0 < min < max ≤ 1');
   if (c.waves.maxCrest / c.riseSpeed > c.waves.travelEnd) errors.push('highest crest must be reachable in travelEnd');

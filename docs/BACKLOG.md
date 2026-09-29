@@ -5,16 +5,16 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 ## Session 1: foundation (M0–M2)
 
 ### M0 Scaffold
-- [ ] npm workspaces (`packages/*`, `templates/*`, `games/*`, `tools/*`), Node 22, strict TypeScript via a shared `tsconfig.base.json`
-- [ ] Vite (per game), Vitest, ESLint + Prettier
-- [ ] Playwright: pin `@playwright/test` to an exact version, then run `npx playwright install chromium`
-- [ ] Root scripts named in `CLAUDE.md`: `dev`, `build`, `check`, `e2e`, `new-game` (a stub is fine until M4), `size`
-- [ ] Size check: fails if any game's initial JavaScript is over 300 KB gzipped
-- [ ] GitHub Actions CI at `.github/workflows/ci.yml`: `npm ci` → `npx playwright install --with-deps chromium` → `npm run check` → `npm run e2e`
+- [x] npm workspaces (`packages/*`, `templates/*`, `games/*`, `tools/*`), Node 22, strict TypeScript via a shared `tsconfig.base.json`
+- [x] Vite (per game), Vitest, ESLint + Prettier
+- [x] Playwright: pin `@playwright/test` to an exact version, then run `npx playwright install chromium`
+- [x] Root scripts named in `CLAUDE.md`: `dev`, `build`, `check`, `e2e`, `new-game` (a stub is fine until M4), `size`
+- [x] Size check: fails if any game's initial JavaScript is over 300 KB gzipped
+- [x] GitHub Actions CI at `.github/workflows/ci.yml`: `npm ci` → `npx playwright install --with-deps chromium` → `npm run check` → `npm run e2e`
 - **Accept:** a fresh clone passes `npm ci && npm run check`, and CI is green on the session branch.
 
 ### M1 Engine, platform and analytics
-- [ ] `packages/engine`:
+- [x] `packages/engine`:
   - fixed-timestep loop and scene stack
   - unified pointer, touch and keyboard input
   - seeded RNG (seed from the date or a challenge)
@@ -22,7 +22,7 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
   - WebAudio with mute
   - device-pixel-ratio-aware canvas that fits 9:16 and handles resizes
   - strings loader
-- [ ] `packages/platform`: a `PlatformAdapter` interface with these methods:
+- [x] `packages/platform`: a `PlatformAdapter` interface with these methods:
   - `init()`, `setLoadingProgress(pct)`, `start()`
   - pause/resume handling
   - `getSeed()`, `getChallenge()`, `submitScore()`, `share(payload)`
@@ -30,19 +30,19 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
   - an events hook
 
   Plus two adapters: `web` (for dev) and `mock` (records calls, for tests).
-- [ ] `packages/analytics`: the typed events listed in `CLAUDE.md`, with console and in-memory sinks
-- [ ] Unit tests:
+- [x] `packages/analytics`: the typed events listed in `CLAUDE.md`, with console and in-memory sinks
+- [x] Unit tests:
   - RNG determinism and loop timing
   - adapter contract tests that run against every adapter
 - **Accept:** contract tests pass for `web` and `mock`, and the engine touches the DOM only through one thin renderer module.
 
 ### M2 First template and game #1
-- [ ] `templates/score-attack`:
+- [x] `templates/score-attack`:
   - one-thumb controls and 30–90 second rounds
   - instant restart
   - end screen with score, share and challenge
-- [ ] `games/<slug-1>` built from that template, with `SPEC.md` filled in from `docs/GAME_SPEC_TEMPLATE.md`
-- [ ] e2e smoke test (Playwright, mock adapter, 390×844 mobile viewport). It must confirm that:
+- [x] `games/tidewall` (game #1) built from that template, with `SPEC.md` filled in from `docs/GAME_SPEC_TEMPLATE.md`
+- [x] e2e smoke test (Playwright, mock adapter, 390×844 mobile viewport). It must confirm that:
   - the game loads with 0 console errors
   - the first input works
   - a round ends (use a test hook or autoplay seed)
@@ -91,7 +91,7 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 
 ## Concept seeds
 These are original starting points. Do a name/IP check before any release.
-1. **Tidewall** (score-attack): hold to raise a seawall segment, release to lock it. Waves arrive in seeded patterns, and perfect locks chain multipliers.
+1. ~~**Tidewall**~~ (score-attack, used: `games/tidewall`, Session 1): hold to raise a seawall segment, release to lock it. Waves arrive in seeded patterns, and perfect locks chain multipliers.
 2. **Glyph Turn** (daily-puzzle): rotate the rows and columns of a 5×5 glyph grid to match the day's target in the fewest moves. The share card shows moves and streak.
 3. **Relay Sketch** (party-async): trace a path through moving gates in 10 seconds, then send your seed and time as a challenge.
 4. **Signal Drift** (score-attack): tap left or right to steer a signal between walls that pulse to a procedurally generated beat.

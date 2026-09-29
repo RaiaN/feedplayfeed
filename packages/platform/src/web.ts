@@ -111,8 +111,9 @@ export function createWebAdapter(env: WebEnv = browserEnv(), namespace = 'feedpl
         try {
           await env.share({ text: payload.text, url: link });
           return { method: 'native', payload, url: link };
-        } catch {
-          // User cancelled or share failed: fall through to clipboard.
+        } catch (e) {
+          // User closed the share sheet: respect that. Any other failure falls through to clipboard.
+          if ((e as { name?: string })?.name === 'AbortError') return { method: 'none', payload, url: link };
         }
       }
       if (env.copy) {

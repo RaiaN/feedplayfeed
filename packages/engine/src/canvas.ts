@@ -8,6 +8,8 @@ export interface TextStyle {
   baseline?: CanvasTextBaseline;
   weight?: number | 'bold' | 'normal';
   font?: string;
+  /** Shrink to fit this width (long localized strings). */
+  maxWidth?: number;
 }
 
 export const FONT_STACK = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -17,7 +19,8 @@ export function drawText(ctx: CanvasRenderingContext2D, text: string, x: number,
   ctx.fillStyle = s.color;
   ctx.textAlign = s.align ?? 'center';
   ctx.textBaseline = s.baseline ?? 'middle';
-  ctx.fillText(text, x, y);
+  if (s.maxWidth !== undefined) ctx.fillText(text, x, y, s.maxWidth);
+  else ctx.fillText(text, x, y);
 }
 
 export function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number): void {

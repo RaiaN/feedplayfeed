@@ -38,7 +38,22 @@ describe('web adapter specifics', () => {
     expect(shared).toEqual([{ text: 'Beat me', url: res.url }]);
   });
 
-  it('falls back to clipboard when native share is cancelled', async () => {
+  it('reports none (no clipboard copy) when the user cancels the share sheet', async () => {
+    let copied = '';
+    const abort = Object.assign(new Error('cancelled'), { name: 'AbortError' });
+    const a = createWebAdapter(
+      env({
+        share: async () => {
+          throw abort;
+        },
+        copy: async (t) => void (copied = t),
+      }),
+    );
+    expect((await a.share(payload)).method).toBe('none');
+    expect(copied).toBe('');
+  });
+
+  it('falls back to clipboard when native share fails', async () => {
     let copied = '';
     const a = createWebAdapter(
       env({

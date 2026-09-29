@@ -22,7 +22,7 @@ export interface Wave {
 export type SimEvent =
   | { type: 'spawn'; time: number; wave: number; lane: number; crest: number }
   | { type: 'raise'; time: number; wave: number }
-  | { type: 'lock'; time: number; wave: number; height: number }
+  | { type: 'lock'; time: number; wave: number; lane: number; height: number }
   | { type: 'impact'; time: number; wave: number; lane: number; grade: Grade; points: number; multiplier: number };
 
 export class TidewallSim {
@@ -33,6 +33,8 @@ export class TidewallSim {
   bestChain = 0;
   perfects = 0;
   breaches = 0;
+  /** Waves the player started raising the wall for. */
+  raises = 0;
   wave: Wave | null = null;
   /** Current wall height of the active lane, 0–1. */
   wall = 0;
@@ -71,6 +73,7 @@ export class TidewallSim {
       if (thumb.pressed && !this.rising) {
         this.rising = true;
         this.wall = 0;
+        this.raises++;
         this.events.push({ type: 'raise', time: this.time, wave: wave.index });
       }
       if (this.rising) {
@@ -118,7 +121,13 @@ export class TidewallSim {
     this.locked = true;
     if (this.wave) {
       this.lanes[this.wave.lane] = this.wall;
-      this.events.push({ type: 'lock', time: this.time, wave: this.wave.index, height: this.wall });
+      this.events.push({
+        type: 'lock',
+        time: this.time,
+        wave: this.wave.index,
+        lane: this.wave.lane,
+        height: this.wall,
+      });
     }
   }
 
