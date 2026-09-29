@@ -1,0 +1,15 @@
+{
+  "name": "@feedplay/template-duo-balance",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./strings.base.json": "./strings.base.json",
+    "./suite": "./src/suite.ts"
+  },
+  "dependencies": {
+    "@feedplay/engine": "*",
+    "@feedplay/template-score-attack": "*"
+  }
+}

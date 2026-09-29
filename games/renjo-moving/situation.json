@@ -1,0 +1,103 @@
+{
+  "id": "moving",
+  "backdrop": "moving",
+  "climaxAt": 0.62,
+  "cards": [
+    {
+      "id": "m1",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 12, "tag": "toward" },
+      "right": { "who": "jo", "delta": -12, "tag": "away" }
+    },
+    {
+      "id": "m2",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 12, "tag": "toward" },
+      "right": { "who": "ren", "delta": -14, "tag": "criticism" }
+    },
+    {
+      "id": "m3",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 12, "tag": "responsibility" },
+      "right": { "who": "jo", "delta": -15, "tag": "defensiveness" }
+    },
+    {
+      "id": "m4",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 14, "tag": "soothe" },
+      "right": { "who": "jo", "delta": 11, "tag": "need" }
+    },
+    {
+      "id": "m5",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 12, "tag": "need" },
+      "right": { "who": "ren", "delta": 11, "tag": "need" }
+    },
+    {
+      "id": "m6",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 12, "tag": "repair" },
+      "right": { "who": "jo", "delta": -14, "tag": "stonewalling" }
+    },
+    {
+      "id": "m7",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 14, "tag": "repair" },
+      "right": { "who": "ren", "delta": -18, "tag": "criticism" }
+    },
+    {
+      "id": "m8",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 12, "tag": "influence" },
+      "right": { "who": "jo", "delta": -13, "tag": "defensiveness" }
+    },
+    {
+      "id": "m9",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 14, "tag": "toward" },
+      "right": { "who": "ren", "delta": -18, "tag": "contempt" }
+    },
+    {
+      "id": "m10",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 11, "tag": "need" },
+      "right": { "who": "ren", "delta": 11, "tag": "need" }
+    },
+    {
+      "id": "m11",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 12, "tag": "toward" },
+      "right": { "who": "ren", "delta": -12, "tag": "away" }
+    },
+    {
+      "id": "m12",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 14, "tag": "soothe" },
+      "right": { "who": "jo", "delta": -14, "tag": "flooding" }
+    },
+    {
+      "id": "m13",
+      "speaker": "ren",
+      "left": { "who": "jo", "delta": 12, "tag": "gentle" },
+      "right": { "who": "jo", "delta": -16, "tag": "contempt" }
+    },
+    {
+      "id": "m14",
+      "speaker": "jo",
+      "left": { "who": "jo", "delta": 11, "tag": "influence" },
+      "right": { "who": "ren", "delta": 9, "tag": "standoff" }
+    },
+    {
+      "id": "m15",
+      "speaker": "ren",
+      "left": { "who": "ren", "delta": 12, "tag": "appreciation" },
+      "right": { "who": "ren", "delta": -12, "tag": "shallows" }
+    }
+  ],
+  "climax": {
+    "id": "mx",
+    "speaker": "jo",
+    "left": { "who": "jo", "delta": 24, "tag": "toward" },
+    "right": { "who": "jo", "delta": -22, "tag": "away" }
+  }
+}
