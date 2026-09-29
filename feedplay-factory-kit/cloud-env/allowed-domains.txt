@@ -1,0 +1,8 @@
+cdn.playwright.dev
+playwright.download.prss.microsoft.com
+playwright.azureedge.net
+developers.reddit.com
+developers.facebook.com
+developers.google.com
+docs.crazygames.com
+sdk.poki.com
