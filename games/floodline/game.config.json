@@ -1,0 +1,53 @@
+{
+  "roundSeconds": 60,
+  "partner": {
+    "x": 180,
+    "y": 118
+  },
+  "you": {
+    "x": 180,
+    "y": 520,
+    "hitRadius": 34
+  },
+  "heart": {
+    "rest": 72,
+    "flood": 100,
+    "recover": 90,
+    "max": 150,
+    "perHit": 16,
+    "repairRelief": 6,
+    "antidoteRelief": 0.5,
+    "restDrift": 0.8,
+    "breatheDrop": 14
+  },
+  "barbs": {
+    "startCount": 2,
+    "intervalStart": 1.15,
+    "intervalEnd": 0.38,
+    "speedStart": 105,
+    "speedEnd": 240,
+    "repairChanceStart": 0.28,
+    "repairChanceEnd": 0.18,
+    "spread": 130,
+    "tapRadius": 38
+  },
+  "breathe": {
+    "holdDelay": 0.25,
+    "slowFactor": 0.3
+  },
+  "startup": {
+    "seconds": 8,
+    "multiplier": 2
+  },
+  "scoring": {
+    "antidote": 40,
+    "repair": 80,
+    "closeCall": 40,
+    "closeCallDistance": 110,
+    "streakPerLevel": 3,
+    "maxMultiplier": 5,
+    "finishBonus": 300,
+    "masterRatio": 5,
+    "masterBonus": 300
+  }
+}

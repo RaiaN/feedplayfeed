@@ -1,0 +1,26 @@
+// Okabe–Ito accents. Every horseman has its own SHAPE (thorn, rolling eye, shield, brick) and the repair is a
+// heart with a plaster: colour only reinforces the shape.
+export const colors = {
+  wallTop: '#1f2a36',
+  wallBottom: '#33404f',
+  table: '#5b4636',
+  water: '0,114,178',
+  waterTop: '#56b4e9',
+  floodLine: '#f0e442',
+  you: '#56b4e9',
+  partner: '#e69f00',
+  skin: '#f1d3b3',
+  skin2: '#c68b59',
+  criticism: '#e69f00',
+  contempt: '#cc79a7',
+  defensiveness: '#f0e442',
+  stonewalling: '#a3a9b3',
+  repair: '#009e73',
+  good: '#009e73',
+  gold: '#f0e442',
+  miss: '#b9c0cc',
+  text: '#ffffff',
+  muted: '#d7dee8',
+  panel: '#1b2733',
+  night: '#141d27',
+} as const;
