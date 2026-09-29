@@ -50,3 +50,5 @@ npm ci && npm run build
 - [ ] 2026-09-29 (IP) Name/IP check: "Tidewall". Search app stores (iOS/Google Play), Steam, itch.io, and a trademark search (USPTO TESS / EUIPO eSearch). Record the result and date in `games/tidewall/SPEC.md` ("Name/IP check").
 - [ ] 2026-09-29 (Cloud env) Poki docs are blocked from cloud sessions. Add `developers.poki.com` to the environment's network allowlist (claude.ai/code → environment settings → Network access), next to `sdk.poki.com`, before Session 5.
 - [ ] 2026-09-29 (GitHub) After reviewing branch `claude/sweet-pascal-ojhvp3`, open a PR to `main` and merge it. CI (`.github/workflows/ci.yml`) runs on every push.
+- [ ] 2026-09-29 (IP) Name/IP checks: "Wolf Night", "Hawk Shadow", "Shark Wake". Same process as Tidewall: app stores, Steam, itch.io, and a trademark search (USPTO / EUIPO). Record the results in each `games/<slug>/SPEC.md`.
+- [ ] 2026-09-29 (Playtest) Play the 3 primal demos on a real phone (`npm run dev -w games/<slug>`, then open the LAN URL). Check the sound (heartbeat, screech, chimes) and the feel of the input. Note which one you'd share.

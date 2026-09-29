@@ -89,6 +89,13 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 - **Each session:** 1–2 new games made with the `new-game` skill, each followed by a game-reviewer pass.
 - **Weekly:** run the review prompt in `SESSION_PROMPTS.md`, make kill/double-down decisions, and update this backlog.
 
+## Primal-instinct pivot (2026-09-29)
+- [x] Audience and genre brief: `docs/research/2026-09-29-audience-genres.md`
+- [x] Template and engine: Thumb x/y, bot positions, `endTitleKey`, `engine/fx` (vignette, shake, flash, time warp), `Heartbeat`
+- [x] `tools/e2e/score-attack.ts` shared smoke suite
+- [x] Demos: `games/wolfnight` (tap to flash wolves back), `games/hawkshadow` (hold to run, release to freeze), `games/sharkwake` (tap left/right to dodge a chasing fin)
+- [ ] Put the 3 demos in front of real players (a Devvit playtest after Session 3) and compare D1 × share rate against `tidewall`
+
 ## Concept seeds
 These are original starting points. Do a name/IP check before any release.
 1. ~~**Tidewall**~~ (score-attack, used: `games/tidewall`, Session 1): hold to raise a seawall segment, release to lock it. Waves arrive in seeded patterns, and perfect locks chain multipliers.
@@ -97,3 +104,11 @@ These are original starting points. Do a name/IP check before any release.
 4. **Signal Drift** (score-attack): tap left or right to steer a signal between walls that pulse to a procedurally generated beat.
 5. **Warmer** (daily-puzzle): find a hidden spot on a generated map in at most 6 taps, using warmer/colder hints.
 6. **Blob Route** (party-async): plan a 3-move route for a sneaky blob; friends try to beat it on the same seed.
+
+### Primal-instinct seeds (priority after the pivot)
+7. ~~**Wolf Night**~~ (built): tap toward glowing eyes to flash wolves back; survive until dawn.
+8. ~~**Hawk Shadow**~~ (built): hold to run, release to freeze under a diving hawk's shadow.
+9. ~~**Shark Wake**~~ (built): tap left/right to dodge rocks while a fin closes in.
+10. **Small Fry** (score-attack): drag a tiny fish around a pond. Pike lunge along telegraphed lines and a heron's shadow strikes. Eat eggs to grow, but a bigger fish is easier to hit.
+11. **Cave Dash** (score-attack): hold to sprint through a collapsing tunnel while a rockslide rumbles behind you. Timed ducks under falling slabs are near misses.
+12. **Lights Out** (daily-puzzle): in a dark house, you have 6 moves to reach the door while something shuffles closer each turn. Daily seed, with a share card of the path.
