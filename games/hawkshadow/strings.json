@@ -1,0 +1,22 @@
+{
+  "meta.title": "Hawk Shadow",
+  "hud.beat": "Beat {score}",
+  "fx.close": "Close call!",
+  "fx.safe": "Hidden",
+  "fx.feint": "Pulled up…",
+  "fx.home": "Home!",
+  "end.title": "Run over",
+  "end.caught": "Caught in the open · {meters}m",
+  "end.survived": "Safe in the burrow!",
+  "end.titleBeat": "Challenge beaten!",
+  "end.best": "Best {best} · {closeCalls} close calls",
+  "end.again": "Run again",
+  "end.share": "Share score",
+  "end.challenge": "Challenge a friend",
+  "share.score": "I ran {meters}m under a hunting hawk on Hawk Shadow: {closeCalls} last-second freezes, {score} points. Freeze or flee?",
+  "share.challenge": "Same field, same hawk. I scored {score}. Can you run further?",
+  "toast.shared": "Shared!",
+  "toast.copied": "Link copied",
+  "toast.failed": "Couldn't share",
+  "hud.meters": "{m} m"
+}

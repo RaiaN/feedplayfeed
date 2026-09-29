@@ -1,0 +1,27 @@
+// Colorblind-safe (Okabe–Ito accents on a green field). The dive warning is also a shrinking, dashed reticle and a
+// darkening, sharpening shadow: never colour alone.
+export const colors = {
+  field: '#4e7f34',
+  tuftDark: '#3c6627',
+  tuftLight: '#78a852',
+  flower: '#f5f0dc',
+  flowerY: '#f0e442',
+  mouse: '#a88a6c',
+  mouseDark: '#7d6650',
+  ear: '#f2a7b5',
+  eye: '#1b1b1b',
+  seed: '#e69f00',
+  seedEdge: '#8a5a00',
+  shadow: '10,14,8',
+  hawk: '#2a2320',
+  reticle: '#ffffff',
+  danger: '213,94,0',
+  close: '#f0e442',
+  safe: '#56b4e9',
+  feint: '#cc79a7',
+  text: '#ffffff',
+  muted: '#dfe8d5',
+  panel: '#1f3317',
+  night: '#16240f',
+  burrow: '#3b2a1c',
+} as const;
