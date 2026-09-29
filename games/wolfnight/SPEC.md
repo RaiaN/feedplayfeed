@@ -9,7 +9,7 @@
 | First 3 seconds | Dark woods, a girl in a blue cloak inside a small circle of lantern light, and three pairs of glowing eyes already creeping in. A pulsing tap ring sits on the nearest eyes. One tap flashes a cone of light and the wolf bolts back. |
 | Core loop (verbs) | spot eyes → tap (flash) → wolf retreats → refuel on fireflies → survive |
 | Controls | One thumb: tap toward a wolf (a cone of about 50°). Tap a firefly to collect it. |
-| Round length | 60 s to dawn, or until caught (the bot median is about 50 s) |
+| Round length | 60 s to dawn, or until caught (the bot median is about 58 s) |
 | Seed use | Both: daily UTC seed; challenge links replay the same wolves |
 | Share moment | "I lasted 57s … 38 close calls". Seconds survived plus close calls, and "Same night, same wolves. Beat me." |
 | Retention hook | Daily night (new wolves every day), best per seed, dawn as a visible goal; Devvit leaderboard later |
@@ -18,6 +18,7 @@
 | Art direction | Tense, moody, readable. Near-black woods `#05080d`, warm lantern light, amber eyes `#ffb000`, blue cloak `#0072b2`, yellow lantern and UI `#f0e442`. Top-down vector shapes with no assets. Wolves are stylised silhouettes: no teeth, no blood. |
 | Audio | Procedural: a heartbeat that speeds up as wolves close in, a flash whoosh, a rising close-call chime, a firefly twinkle, a low growl on spawn, a dawn chord. Sound starts after the first tap; mute persists. |
 | Accessibility | The danger cue is shape and motion (eyes, closing dark, pulsing heartbeat), not colour alone. Reduced motion removes shake, bobbing and blinking, and softens flashes. Text ≥20 logical px. |
+| Likely age rating | PEGI 7 / ESRB E10+-ish ("mild frightening scenes": a hunted girl, glowing eyes and a racing heartbeat). No gore; being caught is non-violent. Confirm during store/portal submission. |
 | Name/IP check | Pending (logged in `docs/HUMAN_TASKS.md`) |
 | Success metric (7 days) | D1 ≥ 25%, share rate ≥ 5%, median session ≥ 120 s |
 | Kill rule | D1 < 15% or share rate < 2% after 1,000 players |

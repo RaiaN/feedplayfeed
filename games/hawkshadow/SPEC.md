@@ -18,6 +18,7 @@
 | Art direction | Bright, open and exposed. Field `#4e7f34`, grass tufts, gold seeds `#e69f00`, soft brown mouse with pink ears, and a dark bird silhouette as the shadow. When the hawk strikes it is a solid silhouette: no talons shown, no injury. |
 | Audio | Procedural: a screech when a dive starts, a heartbeat that speeds up with the warning, a whoosh on the strike, a close-call chime, seed ticks, a home chord. |
 | Accessibility | The warning shows as the shadow's position, size and darkness plus a shrinking reticle that turns dashed; red is only a secondary cue. Reduced motion removes shake, flap and bob. Text ≥20 logical px. |
+| Likely age rating | PEGI 7 / ESRB E10+-ish ("mild frightening scenes": a diving predator and a racing heartbeat). No gore; being caught is non-violent. Confirm during store/portal submission. |
 | Name/IP check | Pending (logged in `docs/HUMAN_TASKS.md`) |
 | Success metric (7 days) | D1 ≥ 25%, share rate ≥ 5%, median session ≥ 120 s |
 | Kill rule | D1 < 15% or share rate < 2% after 1,000 players |

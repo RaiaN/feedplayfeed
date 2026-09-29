@@ -18,6 +18,7 @@
 | Art direction | Bright, fast, readable. Sea blues `#0b4f7c` → `#1473a8`, yellow board `#f0e442`, grey rocks, brown logs, white chevron wave pads, a dark fin `#2d3440` with a white V wake. No bite imagery: a wipeout is a splash and a flash. |
 | Audio | Procedural: lane-switch swish, near-miss chime, wave whoosh, hit thud, a heartbeat that speeds up as the fin closes, a shore chord. |
 | Accessibility | Obstacles differ by shape (jagged rock vs long log) and all have a foam ring; boosts are chevrons; the fin's distance is its position on screen. Reduced motion removes sway, splash and shake. Text ≥20 logical px. |
+| Likely age rating | PEGI 7 / ESRB E10+-ish ("mild frightening scenes": a chasing fin and a racing heartbeat). No gore; being caught is non-violent. Confirm during store/portal submission. |
 | Name/IP check | Pending (logged in `docs/HUMAN_TASKS.md`) |
 | Success metric (7 days) | D1 ≥ 25%, share rate ≥ 5%, median session ≥ 120 s |
 | Kill rule | D1 < 15% or share rate < 2% after 1,000 players |

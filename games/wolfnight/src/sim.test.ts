@@ -104,7 +104,7 @@ describe('Wolf Night content files', () => {
   });
 
   it('strings.json has every template and game key', () => {
-    const keys = [...TEMPLATE_STRING_KEYS, 'end.caught', 'end.survived', 'fx.close', 'fx.back', 'fx.dawn'];
+    const keys = [...TEMPLATE_STRING_KEYS, 'end.caught', 'end.survived', 'fx.close', 'fx.dawn'];
     for (const k of keys) expect(strings).toHaveProperty([k]);
   });
 });

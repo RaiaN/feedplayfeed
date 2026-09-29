@@ -50,7 +50,8 @@ export class WolfNightRenderer {
     ctx.save();
     ctx.translate(off.x, off.y);
 
-    const R = sim.lightRadius;
+    // Caught: the lantern gutters out and the scene goes dark (no bite, no blood).
+    const R = sim.caught ? sim.lightRadius * Math.max(0.05, 1 - sim.caughtFor / 0.7) : sim.lightRadius;
     const dawn = clamp((sim.time - (sim.config.roundSeconds - 12)) / 12, 0, 1);
 
     // Ground and trees (hidden by the darkness overlay except inside the lantern light).
@@ -131,8 +132,8 @@ export class WolfNightRenderer {
           big: false,
         });
       } else if (e.type === 'caught') {
-        this.shake.trigger(v.time, 14, 0.5);
-        this.flash.trigger(v.time, colors.danger, 0.5);
+        this.shake.trigger(v.time, 6, 0.3);
+        this.flash.trigger(v.time, '255,248,210', 0.35);
       } else if (e.type === 'dawn') {
         this.flash.trigger(v.time, '255,220,170', 0.8);
         this.popups.push({

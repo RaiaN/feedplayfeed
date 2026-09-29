@@ -56,8 +56,9 @@ export class WolfNightRound implements ScoreAttackRound {
       else if (e.type === 'spawn' && this.sim.time > 0)
         s.blip({ freq: 140, slideTo: 110, duration: 0.25, type: 'sawtooth', gain: 0.025 });
       else if (e.type === 'caught') {
-        s.noise(0.4, 0.16);
-        s.blip({ freq: 110, slideTo: 50, duration: 0.5, type: 'sawtooth', gain: 0.08 });
+        // Lantern snuffed: a soft fizz and a falling tone.
+        s.noise(0.35, 0.08);
+        s.blip({ freq: 330, slideTo: 110, duration: 0.6, type: 'triangle', gain: 0.06 });
       } else if (e.type === 'dawn') {
         for (const [i, f] of [523, 659, 784].entries())
           s.blip({ freq: f, duration: 0.5, type: 'triangle', gain: 0.05, delay: i * 0.08 });

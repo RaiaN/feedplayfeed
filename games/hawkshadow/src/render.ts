@@ -56,7 +56,8 @@ export class HawkShadowRenderer {
     if (left < 3) this.drawBurrow(ctx, sim.x, my - 40 - clamp(left, 0, 3) * 120);
 
     const warn = sim.warning;
-    if (!sim.caught) this.drawMouse(ctx, v);
+    if (sim.caught) this.drawDazed(ctx, v);
+    else this.drawMouse(ctx, v);
     this.drawShadow(ctx, v, warn);
     if (warn > 0 && !sim.caught) this.drawReticle(ctx, sim.x, my, warn);
 
@@ -110,7 +111,8 @@ export class HawkShadowRenderer {
       } else if (e.type === 'seed') {
         this.popups.push({ text: `+${e.points}`, x: e.x, y: my - 40, color: colors.close, born: v.time, big: false });
       } else if (e.type === 'caught') {
-        this.flash.trigger(v.time, colors.danger, 0.45);
+        this.flash.trigger(v.time, '255,255,255', 0.45);
+        this.leave = { born: v.time, x: sim.x, y: my, dir: 1, strike: true };
         this.shake.trigger(v.time, 14, 0.5);
       } else if (e.type === 'home') {
         this.popups.push({
@@ -174,6 +176,31 @@ export class HawkShadowRenderer {
         }
         ctx.stroke();
       }
+    }
+  }
+
+  /** Caught: flattened in the grass with little stars circling (dazed, not hurt). */
+  private drawDazed(ctx: CanvasRenderingContext2D, v: RenderView): void {
+    const x = this.sim.x;
+    const y = this.sim.config.mouse.screenY;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(0.9);
+    ctx.fillStyle = colors.mouse;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 15, 11, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = colors.ear;
+    ctx.beginPath();
+    ctx.ellipse(-12, -8, 6, 3, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(-12, 8, 6, 3, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    const spin = v.reducedMotion ? 0 : v.time * 5;
+    ctx.fillStyle = colors.close;
+    for (let i = 0; i < 3; i++) {
+      const a = spin + (i * Math.PI * 2) / 3;
+      drawStar(ctx, x + Math.cos(a) * 20, y - 22 + Math.sin(a) * 6, 5);
     }
   }
 
@@ -285,7 +312,18 @@ export class HawkShadowRenderer {
       }
       this.leave = null;
     }
-    if (sim.caught) return { x: sim.x, y: my, scale: 1, alpha: 0.8, angle: -Math.PI / 2 };
+    if (sim.caught) {
+      // The hawk overshoots and climbs away; the mouse is left dazed in the grass (all-ages "caught").
+      const t = clamp(sim.caughtFor / 0.9, 0, 1);
+      const travel = v.reducedMotion ? 0 : t;
+      return {
+        x: sim.x + travel * 150,
+        y: my - travel * 320,
+        scale: 1 + t * 0.6,
+        alpha: 0.7 * (1 - t),
+        angle: -Math.PI / 2 + 0.5,
+      };
+    }
     const k = ease.inQuad(warn);
     return {
       x: lerp(cx, sim.x, k),
@@ -307,7 +345,7 @@ export class HawkShadowRenderer {
     ctx.translate(p.x, p.y);
     ctx.rotate(p.angle + Math.PI / 2);
     ctx.scale(p.scale * 1.4, p.scale * 1.4);
-    ctx.fillStyle = this.sim.caught || swoop < 1 ? colors.hawk : `rgba(${colors.shadow},${p.alpha})`;
+    ctx.fillStyle = swoop < 1 ? colors.hawk : `rgba(${colors.shadow},${p.alpha})`;
     ctx.beginPath();
     ctx.moveTo(0, -22); // beak
     ctx.quadraticCurveTo(7, -12, 6, -4);
@@ -373,4 +411,15 @@ export class HawkShadowRenderer {
     ctx.fill();
     ctx.fillRect(x - 5, ay + 4, 10, 18);
   }
+}
+
+function drawStar(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void {
+  ctx.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const rr = i % 2 === 0 ? r : r * 0.45;
+    const a = -Math.PI / 2 + (i * Math.PI) / 5;
+    ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr);
+  }
+  ctx.closePath();
+  ctx.fill();
 }

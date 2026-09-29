@@ -64,9 +64,10 @@ export class WolfNightSim {
   ) {
     this.rng = createRng(seed).fork('wolfnight');
     // Opening wolves start close and on screen: danger is visible in the very first frame.
-    for (let i = 0; i < config.wolves.startCount; i++) this.spawnWolf(0.5 + i * 0.1);
+    for (let i = 0; i < config.wolves.startCount; i++)
+      this.spawnWolf(config.wolves.openingDistance + i * config.wolves.openingStep);
     this.spawnLeft = config.wolves.spawnStart;
-    this.fireflyLeft = config.fireflies.every * 0.6;
+    this.fireflyLeft = config.fireflies.firstAfter;
   }
 
   get progress(): number {
@@ -92,10 +93,10 @@ export class WolfNightSim {
 
   /** 0 = calm, 1 = a wolf is at the girl. */
   get danger(): number {
-    const { catchRadius } = this.config.girl;
+    const { catchRadius, dangerFalloff } = this.config.girl;
     let nearest = Infinity;
     for (const w of this.wolves) nearest = Math.min(nearest, this.distance(w));
-    return 1 - clamp((nearest - catchRadius) / 220, 0, 1);
+    return 1 - clamp((nearest - catchRadius) / dangerFalloff, 0, 1);
   }
 
   step(dt: number, thumb: Thumb): void {
@@ -187,7 +188,7 @@ export class WolfNightSim {
       const d = this.distance(w);
       if (d > c.lantern.flashRange) return false;
       const a = Math.atan2(w.y - c.girl.y, w.x - c.girl.x);
-      return angleDiff(a, angle) <= half || Math.hypot(w.x - x, w.y - y) <= 40;
+      return angleDiff(a, angle) <= half || Math.hypot(w.x - x, w.y - y) <= c.lantern.directTapRadius;
     });
     if (!hits.length) {
       this.multiplier = 1;
@@ -219,7 +220,7 @@ export class WolfNightSim {
     const w: Wolf = {
       id: this.nextId++,
       x: clamp(c.girl.x + Math.cos(a) * d, 12, 348),
-      y: clamp(c.girl.y + Math.sin(a) * d, 110, 628),
+      y: clamp(c.girl.y + Math.sin(a) * d, 110, c.wolves.spawnMaxY),
       retreat: 0,
       stun: 0,
     };
@@ -230,7 +231,7 @@ export class WolfNightSim {
   private spawnFirefly(): void {
     const c = this.config;
     const a = this.rng.range(0, Math.PI * 2);
-    const d = this.rng.range(90, 180);
+    const d = this.rng.range(c.fireflies.minDistance, c.fireflies.maxDistance);
     const f: Firefly = {
       id: this.nextId++,
       x: clamp(c.girl.x + Math.cos(a) * d, 30, 330),

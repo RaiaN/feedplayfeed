@@ -56,8 +56,9 @@ export class HawkShadowRound implements ScoreAttackRound {
       else if (e.type === 'close') s.blip({ freq: 700, slideTo: 1400, duration: 0.16, type: 'triangle', gain: 0.07 });
       else if (e.type === 'seed') s.blip({ freq: 1100, duration: 0.05, type: 'sine', gain: 0.05 });
       else if (e.type === 'caught') {
-        s.noise(0.45, 0.16);
-        s.blip({ freq: 400, slideTo: 80, duration: 0.5, type: 'sawtooth', gain: 0.07 });
+        // Whoosh past and a cartoon "bonk": dazed, not hurt.
+        s.noise(0.35, 0.1);
+        s.blip({ freq: 520, slideTo: 260, duration: 0.3, type: 'triangle', gain: 0.06 });
       } else if (e.type === 'home') {
         for (const [i, f] of [523, 659, 784].entries())
           s.blip({ freq: f, duration: 0.5, type: 'triangle', gain: 0.05, delay: i * 0.08 });

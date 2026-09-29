@@ -1,7 +1,8 @@
 export interface WolfNightConfig {
   /** Seconds until dawn (30–90). Surviving that long ends the round with a bonus. */
   roundSeconds: number;
-  girl: { x: number; y: number; catchRadius: number };
+  /** dangerFalloff: distance beyond catchRadius over which the heartbeat/vignette danger ramps from 1 to 0. */
+  girl: { x: number; y: number; catchRadius: number; dangerFalloff: number };
   lantern: {
     /** Light radius at empty / full oil. */
     minRadius: number;
@@ -12,6 +13,8 @@ export interface WolfNightConfig {
     /** Full cone width of a lantern flash. */
     flashConeDeg: number;
     cooldown: number;
+    /** A tap this close to a wolf always hits it, even at the cone's edge. */
+    directTapRadius: number;
   };
   wolves: {
     startCount: number;
@@ -26,8 +29,21 @@ export interface WolfNightConfig {
     retreatSpeed: number;
     stun: number;
     max: number;
+    /** Opening wolves start at spawnDistance × (openingDistance + i × openingStep): visible in frame 1. */
+    openingDistance: number;
+    openingStep: number;
+    /** Lowest spawn y (keeps wolves off the oil gauge). */
+    spawnMaxY: number;
   };
-  fireflies: { every: number; life: number; oil: number; tapRadius: number };
+  fireflies: {
+    every: number;
+    life: number;
+    oil: number;
+    tapRadius: number;
+    firstAfter: number;
+    minDistance: number;
+    maxDistance: number;
+  };
   scoring: {
     perSecond: number;
     push: number;
