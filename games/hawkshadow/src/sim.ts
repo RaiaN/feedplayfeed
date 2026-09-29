@@ -56,13 +56,17 @@ export class HawkShadowSim {
   private pointsFromDistance = 0;
   private nextSeedAt: number;
   private seedId = 0;
-  private readonly rng: Rng;
+  /** Independent streams: the hawk depends only on time and the seed trail only on distance, so every player
+   *  on the same seed faces the same hawk and the same field regardless of how they move. */
+  private readonly hawkRng: Rng;
+  private readonly fieldRng: Rng;
 
   constructor(
     readonly config: HawkShadowConfig,
     readonly seed: string,
   ) {
-    this.rng = createRng(seed).fork('hawkshadow');
+    this.hawkRng = createRng(seed).fork('hawkshadow:hawk');
+    this.fieldRng = createRng(seed).fork('hawkshadow:field');
     this.x = (config.mouse.minX + config.mouse.maxX) / 2;
     this.dive = this.makeDive(0, config.hawk.firstDive);
     this.nextSeedAt = 90;
@@ -176,15 +180,17 @@ export class HawkShadowSim {
   private nextDive(): void {
     const h = this.config.hawk;
     const p = this.progress;
-    const interval = lerp(h.intervalStart, h.intervalEnd, p) + this.rng.range(-h.jitter, h.jitter);
+    const interval = lerp(h.intervalStart, h.intervalEnd, p) + this.hawkRng.range(-h.jitter, h.jitter);
     this.dive = this.makeDive(this.dive.index + 1, this.time + interval);
   }
 
   private makeDive(index: number, at: number): Dive {
     const h = this.config.hawk;
     const p = Math.min(1, at / this.config.roundSeconds);
-    const feint = index > 1 && this.rng.chance(h.feintChanceEnd * p);
-    const dive = { index, at, warn: lerp(h.warnStart, h.warnEnd, p), feint, resolved: false };
+    const feint = index > 1 && this.hawkRng.chance(h.feintChanceEnd * p);
+    // The very first dive gets a longer telegraph so new players can learn "let go to hide".
+    const warn = index === 0 ? h.firstWarn : lerp(h.warnStart, h.warnEnd, p);
+    const dive = { index, at, warn, feint, resolved: false };
     this.dives++;
     this.events.push({ type: 'dive', time: this.time, index, at, feint });
     return dive;
@@ -192,7 +198,11 @@ export class HawkShadowSim {
 
   private spawnSeed(): void {
     const c = this.config;
-    this.seeds.push({ id: this.seedId++, x: this.rng.range(c.mouse.minX + 10, c.mouse.maxX - 10), d: this.nextSeedAt });
-    this.nextSeedAt += this.rng.range(c.seeds.spacingMin, c.seeds.spacingMax);
+    this.seeds.push({
+      id: this.seedId++,
+      x: this.fieldRng.range(c.mouse.minX + 10, c.mouse.maxX - 10),
+      d: this.nextSeedAt,
+    });
+    this.nextSeedAt += this.fieldRng.range(c.seeds.spacingMin, c.seeds.spacingMax);
   }
 }

@@ -51,7 +51,9 @@ export class HawkShadowRenderer {
       const y = my - (s.d - sim.distance);
       if (y > -20 && y < v.height + 20) this.drawSeed(ctx, s.x, y);
     }
-    if (sim.survived) this.drawBurrow(ctx, sim.x, my - 40);
+    // The burrow comes into view over the last 3 seconds.
+    const left = sim.config.roundSeconds - sim.time;
+    if (left < 3) this.drawBurrow(ctx, sim.x, my - 40 - clamp(left, 0, 3) * 120);
 
     const warn = sim.warning;
     if (!sim.caught) this.drawMouse(ctx, v);
@@ -178,9 +180,9 @@ export class HawkShadowRenderer {
   private drawSeed(ctx: CanvasRenderingContext2D, x: number, y: number): void {
     ctx.fillStyle = colors.seed;
     ctx.strokeStyle = colors.seedEdge;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.ellipse(x, y, 6, 9, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(x, y, 7, 10, 0.4, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
   }
@@ -269,6 +271,9 @@ export class HawkShadowRenderer {
     const angle = orbit + Math.PI / 2;
     if (this.leave) {
       const t = (v.time - this.leave.born) / 0.7;
+      if (t < 1 && v.reducedMotion) {
+        return { x: this.leave.x, y: this.leave.y, scale: 1, alpha: lerp(0.6, 0, t), angle: -Math.PI / 2 };
+      }
       if (t < 1) {
         return {
           x: this.leave.x + this.leave.dir * t * 260,

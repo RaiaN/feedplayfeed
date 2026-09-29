@@ -33,6 +33,39 @@ describe('Hawk Shadow determinism', () => {
     expect(a.score).toBe(b.score);
   });
 
+  it('same seed ⇒ same hawk and same field, however the player moves (fair challenges)', () => {
+    const script = (moving: boolean) => {
+      const sim = new HawkShadowSim(config, '2026-09-29');
+      const bot = createBot('2026-09-29');
+      let prev = false;
+      for (let i = 0; i < 20 / DT && !sim.caught; i++) {
+        const b = moving ? bot(sim) : { held: false, x: 180, y: 470 };
+        sim.step(DT, { held: b.held, pressed: b.held && !prev, released: !b.held && prev, x: b.x, y: b.y });
+        prev = b.held;
+      }
+      const dives = sim.events.flatMap((e) => (e.type === 'dive' ? [[e.at.toFixed(6), e.feint]] : []));
+      return { dives, sim };
+    };
+    const runner = script(true);
+    const still = script(false);
+    const n = Math.min(runner.dives.length, still.dives.length);
+    expect(n).toBeGreaterThanOrEqual(6);
+    expect(runner.dives.slice(0, n)).toEqual(still.dives.slice(0, n));
+    // The seed trail over the shared distance range is identical too.
+    // Walking the field fast vs slowly must lay down the same seed trail.
+    const walk = (dtRun: number) => {
+      const sim = new HawkShadowSim(config, 'trail');
+      const seen = new Map<number, number>();
+      for (let i = 0; i < 400; i++) {
+        sim.step(dtRun, { held: true, pressed: i === 0, released: false, x: 36, y: 470 });
+        sim.caught = false; // keep walking for this check
+        for (const sd of sim.seeds) seen.set(Math.round(sd.d), Math.round(sd.x));
+      }
+      return [...seen.entries()].filter(([d]) => d < 1500).sort((a, b) => a[0] - b[0]);
+    };
+    expect(walk(DT)).toEqual(walk(DT * 2).filter(([d]) => d < 1500));
+  });
+
   it('different seeds ⇒ different seeds on the field and dive timings', () => {
     const f = (s: string) => {
       const sim = new HawkShadowSim(config, s);

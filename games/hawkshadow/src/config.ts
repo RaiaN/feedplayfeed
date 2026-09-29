@@ -13,6 +13,8 @@ export interface HawkShadowConfig {
   };
   hawk: {
     firstDive: number;
+    /** Telegraph length for the first dive only (teaches the freeze). */
+    firstWarn: number;
     /** Seconds between dives at round start → end (± jitter). */
     intervalStart: number;
     intervalEnd: number;
@@ -44,6 +46,7 @@ export function validateConfig(c: HawkShadowConfig): HawkShadowConfig {
   if (!(h.intervalEnd > h.warnEnd + h.strikeWindow)) errors.push('dive interval must exceed warn + strike window');
   if (!(h.intervalStart >= h.intervalEnd && h.warnStart >= h.warnEnd && h.warnEnd > 0)) errors.push('hawk ramps');
   if (!(h.jitter >= 0 && h.jitter < h.intervalEnd - h.warnEnd - h.strikeWindow)) errors.push('hawk jitter too large');
+  if (!(h.firstWarn > 0 && h.firstWarn < h.firstDive)) errors.push('firstWarn must be < firstDive');
   if (!(c.mouse.runSpeed > 0 && c.mouse.minX < c.mouse.maxX)) errors.push('mouse');
   if (!(c.seeds.spacingMin > 0 && c.seeds.spacingMax >= c.seeds.spacingMin)) errors.push('seed spacing');
   if (errors.length) throw new Error(`game.config.json: ${errors.join('; ')}`);

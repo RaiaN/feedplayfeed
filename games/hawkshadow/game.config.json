@@ -1,8 +1,15 @@
 {
   "roundSeconds": 60,
-  "mouse": { "screenY": 470, "runSpeed": 140, "steerSpeed": 420, "minX": 36, "maxX": 324 },
+  "mouse": {
+    "screenY": 470,
+    "runSpeed": 140,
+    "steerSpeed": 420,
+    "minX": 36,
+    "maxX": 324
+  },
   "hawk": {
-    "firstDive": 2.4,
+    "firstDive": 2.6,
+    "firstWarn": 1.8,
     "intervalStart": 3.0,
     "intervalEnd": 1.45,
     "jitter": 0.35,
@@ -11,7 +18,11 @@
     "strikeWindow": 0.22,
     "feintChanceEnd": 0.25
   },
-  "seeds": { "spacingMin": 70, "spacingMax": 150, "pickRadius": 26 },
+  "seeds": {
+    "spacingMin": 70,
+    "spacingMax": 150,
+    "pickRadius": 26
+  },
   "scoring": {
     "pxPerPoint": 10,
     "seed": 30,
