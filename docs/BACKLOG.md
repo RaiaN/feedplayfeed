@@ -77,7 +77,7 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 - **Accept:** the zip is produced, and e2e passes with the mocked SDK.
 
 ## Session 5: clips, analytics and Horizon packs (M7–M9)
-- [ ] `tools/clip`: Playwright autoplay recording at 1080×1920 (webm), converted to mp4 if ffmpeg is present, plus 3 screenshots, saved to `out/clips` and `out/shots`
+- [x] `tools/clip`: Playwright autoplay recording at 1080×1920 (webm), converted to mp4 if ffmpeg is present, plus 3 screenshots, saved to `out/clips` and `out/shots` (done early, in Session 1)
 - [ ] Analytics sinks for each channel where supported, plus `tools/report` (`npm run report`):
   - input: exported CSV/JSON
   - output per game: D1, D7, session length and share rate

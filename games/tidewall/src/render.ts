@@ -103,7 +103,7 @@ export class TidewallRenderer {
           const cx = e.lane * laneW + laneW / 2;
           const y = GROUND_Y - (this.sim.lanes[e.lane] ?? 0) * WALL_MAX_PX;
           for (let k = 0; k < 14; k++) {
-            const a = -Math.PI * (0.1 + (0.8 * ((k * 7) % 14)) / 14);
+            const a = -Math.PI * (0.1 + (0.8 * ((k * 5) % 14)) / 13);
             const sp = 90 + ((k * 37) % 60) * 2;
             this.drops.push({ x: cx, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, born: v.time });
           }

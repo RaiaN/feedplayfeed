@@ -9,6 +9,14 @@ npm run dev -w games/tidewall        # http://localhost:5173 (also on your LAN I
 # test flags: ?adapter=mock&test=1 · ?autoplay=1&speed=4 · challenge: ?c=<seed>&s=<score>
 ```
 
+## Gameplay clip and screenshots
+```bash
+npm run clip -- tidewall                  # bot plays today's seed → out/clips/tidewall-<seed>.webm (+ .mp4 with ffmpeg)
+npm run clip -- tidewall --manual         # scripted real pointer holds instead of the bot
+npm run clip -- tidewall --seed my-seed   # any seed; same seed ⇒ same run
+```
+Screenshots go to `out/shots/tidewall-0{1,2,3}-*.png` (start / mid-round / end card).
+
 ## Web (any static host), available now
 1. `npm run build -w games/tidewall`
 2. Upload the contents of `games/tidewall/dist/` to any static host. Paths are relative, so a subfolder works.

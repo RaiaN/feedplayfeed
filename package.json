@@ -22,7 +22,8 @@
     "size": "node tools/size/check-size.mjs",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build && npm run size",
     "e2e": "npm run build && playwright test --pass-with-no-tests",
-    "new-game": "node tools/new-game/index.mjs"
+    "new-game": "node tools/new-game/index.mjs",
+    "clip": "node tools/clip/clip.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
