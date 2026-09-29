@@ -5,7 +5,7 @@ import type { Point, Sound, Strings } from '@feedplay/engine';
 import { hit } from '@feedplay/engine';
 import type { Challenge, PlatformAdapter, ShareKind, ShareResult } from '@feedplay/platform';
 import { layout } from './layout.ts';
-import type { ScoreAttackGame, ScoreAttackRound, Thumb } from './types.ts';
+import type { BotOutput, ScoreAttackGame, ScoreAttackRound, Thumb } from './types.ts';
 
 export type Phase = 'idle' | 'play' | 'end';
 
@@ -47,8 +47,9 @@ export class ScoreAttackController {
   private idleTime = 0;
   /** A press that landed on a UI button: hide it from the game until it's released. */
   private suppress = false;
-  private bot: ((round: ScoreAttackRound) => boolean) | null = null;
+  private bot: ((round: ScoreAttackRound) => BotOutput) | null = null;
   private botHeld = false;
+  private botPos = { x: 180, y: 400 };
 
   constructor(private readonly d: ControllerDeps) {
     this.settings = { ...d.settings };
@@ -196,14 +197,16 @@ export class ScoreAttackController {
   private effectiveThumb(raw: Thumb): Thumb {
     if (this.suppress) {
       if (!raw.held) this.suppress = false;
-      return { held: false, pressed: false, released: false };
+      return { held: false, pressed: false, released: false, x: raw.x, y: raw.y };
     }
     return raw;
   }
 
   private botThumb(): Thumb {
-    const held = this.bot ? this.bot(this.round) : false;
-    const t = { held, pressed: held && !this.botHeld, released: !held && this.botHeld };
+    const out = this.bot ? this.bot(this.round) : false;
+    const held = typeof out === 'boolean' ? out : out.held;
+    if (typeof out !== 'boolean') this.botPos = { x: out.x, y: out.y };
+    const t = { held, pressed: held && !this.botHeld, released: !held && this.botHeld, ...this.botPos };
     this.botHeld = held;
     return t;
   }

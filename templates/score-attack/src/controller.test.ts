@@ -7,8 +7,9 @@ import { layout } from './layout.ts';
 import type { ScoreAttackGame, ScoreAttackRound, Thumb } from './types.ts';
 
 const DT = 1 / 60;
-const up: Thumb = { held: false, pressed: false, released: false };
-const press: Thumb = { held: true, pressed: true, released: false };
+const up: Thumb = { held: false, pressed: false, released: false, x: 0, y: 0 };
+const press: Thumb = { held: true, pressed: true, released: false, x: 180, y: 400 };
+const hold: Thumb = { held: true, pressed: false, released: false, x: 180, y: 400 };
 const center = (r: { x: number; y: number; w: number; h: number }) => ({ x: r.x + r.w / 2, y: r.y + r.h / 2 });
 
 /** A trivial game: +1 point per step while held. */
@@ -62,7 +63,7 @@ describe('ScoreAttackController', () => {
     expect(c.phase).toBe('idle');
     c.step(DT, press, []);
     expect(c.phase).toBe('play');
-    run(29.99, { held: true, pressed: false, released: false });
+    run(29.99, hold);
     expect(c.phase).toBe('end');
     expect(mem.named('round_start')).toHaveLength(1);
     const end = mem.named('round_end')[0]!.props;
@@ -100,7 +101,7 @@ describe('ScoreAttackController', () => {
     expect(c.rounds).toBe(2);
     expect(c.round.score).toBe(0);
     // The press that hit "again" must not leak into the new round.
-    run(0.5, { held: true, pressed: false, released: false });
+    run(0.5, hold);
     expect(c.round.score).toBe(0);
   });
 
@@ -135,5 +136,41 @@ describe('ScoreAttackController', () => {
     run(31);
     expect(c.phase).toBe('end');
     expect(c.round.score).toBeGreaterThan(1000);
+  });
+});
+
+describe('ScoreAttackController bot + end title', () => {
+  it('passes bot positions through to the round and supports custom end titles', () => {
+    const seen: Array<{ x: number; y: number; pressed: boolean }> = [];
+    const game: ScoreAttackGame = {
+      ...fakeGame,
+      createRound: () => ({
+        step: (_dt, t) => void seen.push({ x: t.x, y: t.y, pressed: t.pressed }),
+        render: () => undefined,
+        score: 0,
+        over: seen.length > 3,
+        multiplier: 1,
+        endTitleKey: 'end.caught',
+        summary: () => ({}),
+      }),
+      createBot: () => () => ({ held: true, x: 42, y: 99 }),
+    };
+    const adapter = createMockAdapter();
+    const c = new ScoreAttackController({
+      game,
+      adapter,
+      analytics: createAnalytics({ sinks: [], now: () => 0 }),
+      strings: createStrings({}),
+      sound: new Sound(() => null),
+      seed: 's',
+      challenge: null,
+      settings: { muted: false, reducedMotion: false },
+      best: 0,
+      autoplay: true,
+    });
+    for (let i = 0; i < 30; i++) c.step(DT, up, []);
+    expect(seen[0]).toEqual({ x: 42, y: 99, pressed: true });
+    expect(seen[1]?.pressed).toBe(false);
+    expect(c.round.endTitleKey).toBe('end.caught');
   });
 });

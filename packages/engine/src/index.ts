@@ -6,5 +6,6 @@ export * from './tween.ts';
 export * from './strings.ts';
 export * from './audio.ts';
 export * from './canvas.ts';
+export * from './fx.ts';
 export type { Host, HostOptions } from './dom.ts';
 export { createHost } from './dom.ts';

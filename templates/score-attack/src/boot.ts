@@ -85,7 +85,8 @@ export async function bootScoreAttack(opts: BootOptions): Promise<ScoreAttackCon
 
   const loop = new FixedLoop({
     step: (dt) => {
-      controller.step(dt, input, input.taps);
+      const { held, pressed, released, pos } = input;
+      controller.step(dt, { held, pressed, released, x: pos.x, y: pos.y }, input.taps);
       input.endStep();
     },
     render: () => {

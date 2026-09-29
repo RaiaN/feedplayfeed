@@ -46,10 +46,16 @@ export function drawEndCard(
   ctx.fill();
 
   const beat = c.challenge?.score !== undefined && c.round.score > c.challenge.score;
-  drawText(ctx, strings.t(beat ? 'end.titleBeat' : 'end.title', c.round.summary()), W / 2, 162, {
-    size: 24,
-    color: p.text,
-  });
+  drawText(
+    ctx,
+    strings.t(beat ? 'end.titleBeat' : (c.round.endTitleKey ?? 'end.title'), c.round.summary()),
+    W / 2,
+    162,
+    {
+      size: 24,
+      color: p.text,
+    },
+  );
   const score = String(c.round.score);
   drawText(ctx, score, W / 2, 230, { size: 72, color: p.primary });
   const scoreW = ctx.measureText(score).width;

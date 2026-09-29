@@ -11,6 +11,8 @@ export interface BlipOptions {
   gain?: number;
   /** Frequency to slide to by the end of the blip. */
   slideTo?: number;
+  /** Seconds from now to start. */
+  delay?: number;
 }
 
 export class Sound {
@@ -30,10 +32,10 @@ export class Sound {
     if (this.ctx && this.ctx.state === 'suspended') void this.ctx.resume().catch(() => undefined);
   }
 
-  blip({ freq, duration = 0.08, type = 'square', gain = 0.08, slideTo }: BlipOptions): void {
+  blip({ freq, duration = 0.08, type = 'square', gain = 0.08, slideTo, delay = 0 }: BlipOptions): void {
     const ctx = this.ctx;
     if (this.muted || !ctx || ctx.state !== 'running') return;
-    const t0 = ctx.currentTime;
+    const t0 = ctx.currentTime + delay;
     const osc = ctx.createOscillator();
     const amp = ctx.createGain();
     osc.type = type;
@@ -68,5 +70,32 @@ export class Sound {
     src.buffer = buf;
     src.connect(filter).connect(amp).connect(ctx.destination);
     src.start();
+  }
+}
+
+/**
+ * Heartbeat: a low "lub-dub" whose rate the game sets every step (e.g. from the nearest threat's distance).
+ * Call update() from the simulation step; beats are counted in simulated time.
+ */
+export class Heartbeat {
+  private phase = 0;
+  beats = 0;
+
+  constructor(private readonly sound: Sound | undefined) {}
+
+  /** Advance by dt seconds at `bpm` (0 = silent). Returns true on the step a beat fires. */
+  update(dt: number, bpm: number): boolean {
+    if (bpm <= 0) {
+      this.phase = 0;
+      return false;
+    }
+    this.phase += (dt * bpm) / 60;
+    if (this.phase < 1) return false;
+    this.phase -= Math.floor(this.phase);
+    this.beats++;
+    const gain = Math.min(0.22, 0.08 + bpm / 1200);
+    this.sound?.blip({ freq: 62, slideTo: 40, duration: 0.11, type: 'sine', gain });
+    this.sound?.blip({ freq: 55, slideTo: 36, duration: 0.1, type: 'sine', gain: gain * 0.7, delay: 0.16 });
+    return true;
   }
 }

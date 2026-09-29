@@ -5,7 +5,13 @@ export interface Thumb {
   held: boolean;
   pressed: boolean;
   released: boolean;
+  /** Thumb position in logical units (360×640); keeps the last position when released. */
+  x: number;
+  y: number;
 }
+
+/** What an autoplay bot returns each step: just "held", or a held flag plus a position (tap/drag games). */
+export type BotOutput = boolean | { held: boolean; x: number; y: number };
 
 export interface RenderView {
   width: number;
@@ -26,6 +32,8 @@ export interface ScoreAttackRound {
   readonly over: boolean;
   /** Current score multiplier, shown in the HUD (1 = none). */
   readonly multiplier: number;
+  /** strings.json key for the end-card title (e.g. 'end.caught' / 'end.survived'). Defaults to 'end.title'. */
+  readonly endTitleKey?: string;
   /** Values for the end card / share text placeholders, e.g. { chain: 7 }. */
   summary(): Record<string, string | number>;
 }
@@ -53,7 +61,7 @@ export interface ScoreAttackGame {
   palette: Palette;
   createRound(seed: string, services: RoundServices): ScoreAttackRound;
   /** Autoplay bot for e2e tests and clip recording: returns whether the thumb is held this step. */
-  createBot?(seed: string): (round: ScoreAttackRound) => boolean;
+  createBot?(seed: string): (round: ScoreAttackRound) => BotOutput;
 }
 
 /** strings.json keys the template itself renders. Games must define all of them. */

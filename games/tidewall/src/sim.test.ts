@@ -19,7 +19,7 @@ function playBot(seed: string): TidewallSim {
   let prev = false;
   for (let i = 0; i < STEPS; i++) {
     const held = bot(sim);
-    sim.step(DT, { held, pressed: held && !prev, released: !held && prev });
+    sim.step(DT, { held, pressed: held && !prev, released: !held && prev, x: 0, y: 0 });
     prev = held;
   }
   return sim;
@@ -39,7 +39,7 @@ function playTape(seed: string, delaySteps: number, holdSteps: number): Tidewall
     }
     const held = idx >= 0 && since >= delaySteps && since < delaySteps + holdSteps;
     since++;
-    sim.step(DT, { held, pressed: held && !prev, released: !held && prev });
+    sim.step(DT, { held, pressed: held && !prev, released: !held && prev, x: 0, y: 0 });
     prev = held;
   }
   return sim;
@@ -94,7 +94,7 @@ describe('Tidewall scoring', () => {
     const holdSteps = Math.round(wave.crest / config.riseSpeed / DT);
     for (let i = 0; i < 400 && t.events.every((e) => e.type !== 'impact'); i++) {
       const held = i < holdSteps;
-      t.step(DT, { held, pressed: held && !prev, released: !held && prev });
+      t.step(DT, { held, pressed: held && !prev, released: !held && prev, x: 0, y: 0 });
       prev = held;
     }
     const impact = t.events.find((e) => e.type === 'impact');
@@ -103,7 +103,7 @@ describe('Tidewall scoring', () => {
 
   it('no input is a breach and resets the multiplier', () => {
     const t = new TidewallSim(config, 'idle');
-    const none: Thumb = { held: false, pressed: false, released: false };
+    const none: Thumb = { held: false, pressed: false, released: false, x: 0, y: 0 };
     for (let i = 0; i < 400; i++) t.step(DT, none);
     const impacts = t.events.filter((e) => e.type === 'impact');
     expect(impacts.length).toBeGreaterThan(0);
