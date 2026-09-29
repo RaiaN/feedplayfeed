@@ -1,0 +1,51 @@
+{
+  "roundSeconds": 45,
+  "bank": {
+    "start": 55,
+    "max": 100,
+    "toward": 5,
+    "bigToward": 10,
+    "missed": -9,
+    "distracted": -12,
+    "drainStart": 3,
+    "drainEnd": 6
+  },
+  "bids": {
+    "intervalStart": 0.85,
+    "intervalEnd": 0.36,
+    "lifeStart": 1.9,
+    "lifeEnd": 1.0,
+    "bigChance": 0.15,
+    "bigLifeScale": 0.75,
+    "radius": 34
+  },
+  "distractions": {
+    "chanceStart": 0.15,
+    "chanceEnd": 0.38,
+    "lifeScale": 1.3
+  },
+  "area": {
+    "cols": 3,
+    "rows": 4,
+    "minX": 70,
+    "maxX": 290,
+    "minY": 140,
+    "maxY": 405,
+    "jitter": 16,
+    "noRepeat": 4
+  },
+  "scoring": {
+    "toward": 50,
+    "big": 120,
+    "justInTime": 50,
+    "justInTimeFrac": 0.3,
+    "ignoredPhone": 10,
+    "streakPerLevel": 4,
+    "maxMultiplier": 5,
+    "finishBonus": 200
+  },
+  "benchmarks": {
+    "masters": 86,
+    "disasters": 33
+  }
+}
