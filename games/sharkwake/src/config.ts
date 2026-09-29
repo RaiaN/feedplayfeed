@@ -19,6 +19,8 @@ export interface SharkWakeConfig {
     closeStart: number;
     closeEnd: number;
     hitPenalty: number;
+    /** The fin's closing speed ramps in from 0 over the first seconds (learn the lanes first). */
+    graceSeconds: number;
   };
   rows: {
     firstAt: number;
@@ -28,6 +30,13 @@ export interface SharkWakeConfig {
     /** Chance a row blocks two lanes, ramping 0 → this. */
     doubleChanceEnd: number;
     boostChance: number;
+    /** Rock vs log (visual variety; both block). */
+    rockChance: number;
+    /** Random scale applied to each row gap. */
+    spacingJitterMin: number;
+    spacingJitterMax: number;
+    /** How far ahead rows are generated (px). */
+    lookahead: number;
   };
   scoring: {
     pxPerPoint: number;

@@ -17,14 +17,19 @@
     "maxGap": 145,
     "closeStart": 7,
     "closeEnd": 15,
-    "hitPenalty": 45
+    "hitPenalty": 45,
+    "graceSeconds": 8
   },
   "rows": {
     "firstAt": 260,
     "spacingStart": 250,
     "spacingEnd": 165,
     "doubleChanceEnd": 0.55,
-    "boostChance": 0.5
+    "boostChance": 0.5,
+    "rockChance": 0.65,
+    "spacingJitterMin": 0.85,
+    "spacingJitterMax": 1.2,
+    "lookahead": 900
   },
   "scoring": {
     "pxPerPoint": 10,

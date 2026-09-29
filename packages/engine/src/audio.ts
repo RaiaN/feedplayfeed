@@ -93,7 +93,8 @@ export class Heartbeat {
     if (this.phase < 1) return false;
     this.phase -= Math.floor(this.phase);
     this.beats++;
-    const gain = Math.min(0.22, 0.08 + bpm / 1200);
+    // Present but under the effects (blips sit around 0.03–0.08).
+    const gain = Math.min(0.1, 0.04 + bpm / 3000);
     this.sound?.blip({ freq: 62, slideTo: 40, duration: 0.11, type: 'sine', gain });
     this.sound?.blip({ freq: 55, slideTo: 36, duration: 0.1, type: 'sine', gain: gain * 0.7, delay: 0.16 });
     return true;

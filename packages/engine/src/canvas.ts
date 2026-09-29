@@ -10,6 +10,8 @@ export interface TextStyle {
   font?: string;
   /** Shrink to fit this width (long localized strings). */
   maxWidth?: number;
+  /** Dark outline for legibility over busy backgrounds. */
+  outline?: string;
 }
 
 export const FONT_STACK = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -19,6 +21,13 @@ export function drawText(ctx: CanvasRenderingContext2D, text: string, x: number,
   ctx.fillStyle = s.color;
   ctx.textAlign = s.align ?? 'center';
   ctx.textBaseline = s.baseline ?? 'middle';
+  if (s.outline) {
+    ctx.lineWidth = Math.max(3, s.size / 6);
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = s.outline;
+    if (s.maxWidth !== undefined) ctx.strokeText(text, x, y, s.maxWidth);
+    else ctx.strokeText(text, x, y);
+  }
   if (s.maxWidth !== undefined) ctx.fillText(text, x, y, s.maxWidth);
   else ctx.fillText(text, x, y);
 }

@@ -61,7 +61,7 @@ export class SharkWakeSim {
     this.x = config.surfer.lanes[1]!;
     this.gap = config.fin.startGap;
     this.nextRowAt = config.rows.firstAt;
-    while (this.nextRowAt < 900) this.spawnRow();
+    while (this.nextRowAt < config.rows.lookahead) this.spawnRow();
   }
 
   get progress(): number {
@@ -117,9 +117,10 @@ export class SharkWakeSim {
       if (this.wiped) return;
     }
     this.rows = this.rows.filter((r) => r.d > this.distance - 400);
-    while (this.nextRowAt < this.distance + 900) this.spawnRow();
+    while (this.nextRowAt < this.distance + c.rows.lookahead) this.spawnRow();
 
-    this.gap = Math.min(c.fin.maxGap, this.gap - lerp(c.fin.closeStart, c.fin.closeEnd, this.progress) * dt);
+    const grace = c.fin.graceSeconds > 0 ? Math.min(1, this.time / c.fin.graceSeconds) : 1;
+    this.gap = Math.min(c.fin.maxGap, this.gap - lerp(c.fin.closeStart, c.fin.closeEnd, this.progress) * grace * dt);
     if (this.gap <= 0) {
       this.gap = 0;
       this.wiped = true;
@@ -199,12 +200,14 @@ export class SharkWakeSim {
     const free = [0, 1, 2];
     for (let i = 0; i < count; i++) {
       const at = free.splice(this.rng.int(0, free.length - 1), 1)[0]!;
-      lanes[at] = this.rng.chance(0.65) ? 'rock' : 'log';
+      lanes[at] = this.rng.chance(c.rows.rockChance) ? 'rock' : 'log';
     }
     if (this.rng.chance(c.rows.boostChance)) lanes[this.rng.pick(free)] = 'boost';
     const row: Row = { id: this.rowId++, d: this.nextRowAt, lanes, passed: false };
     this.rows.push(row);
     this.events.push({ type: 'row', time: this.time, id: row.id, lanes: [...lanes] });
-    this.nextRowAt += lerp(c.rows.spacingStart, c.rows.spacingEnd, p) * this.rng.range(0.85, 1.2);
+    this.nextRowAt +=
+      lerp(c.rows.spacingStart, c.rows.spacingEnd, p) *
+      this.rng.range(c.rows.spacingJitterMin, c.rows.spacingJitterMax);
   }
 }

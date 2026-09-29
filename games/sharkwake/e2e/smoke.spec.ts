@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { collectErrors, hook, scoreAttackSmoke, tapLogical, waitForGame } from '../../../tools/e2e/score-attack.ts';
 
-scoreAttackSmoke({ minRoundMs: 1_000, firstTap: { x: 300, y: 540 } });
+scoreAttackSmoke({ minRoundMs: 15_000, firstTap: { x: 300, y: 540 } });
 
 test('tapping the right then left half switches lanes (no autoplay)', async ({ page }) => {
   const { errors } = collectErrors(page);

@@ -1,5 +1,5 @@
 // Shark Wake drawing. Visual-only state (popups, splash, streak cache) lives here, never in the sim.
-import { clamp, createRng, drawText, drawVignette, Flash, Shake, type Strings } from '@feedplay/engine';
+import { clamp, createRng, drawText, drawVignette, Flash, FONT_STACK, Shake, type Strings } from '@feedplay/engine';
 import type { RenderView } from '@feedplay/template-score-attack';
 import { colors } from './palette.ts';
 import type { Kind, SharkWakeSim, SimEvent } from './sim.ts';
@@ -30,6 +30,8 @@ export class SharkWakeRenderer {
   private streaks = new Map<number, Array<{ x: number; dy: number; w: number }>>();
   private readonly shake = new Shake();
   private readonly flash = new Flash();
+  /** Render time of the last wave boost: the fin visibly drops back. */
+  private kickAt = -10;
 
   constructor(
     private readonly sim: SharkWakeSim,
@@ -62,10 +64,17 @@ export class SharkWakeRenderer {
       row.lanes.forEach((k, i) => k && this.drawThing(ctx, k, sim.config.surfer.lanes[i]!, y, v));
     }
 
-    const finY = sy + 34 + sim.gap * 1.15;
-    this.drawWake(ctx, sim.x, sy, v);
-    this.drawFin(ctx, sim.x, finY, v);
-    if (!sim.wiped) this.drawSurfer(ctx, sim.x, sy, v);
+    const finY = sy + 34 + sim.gap * 1.15 + this.finKick(v);
+    if (sim.wiped) {
+      // Wipeout: the surfer tumbles into the foam and the fin veers off and dives away. Nobody gets bitten.
+      const t = clamp(sim.wipedFor / 1.0, 0, 1);
+      this.drawFin(ctx, sim.x + t * 170, finY + 20 + t * 40, v, 1 - t);
+      this.drawTumble(ctx, sim.x, sy, v, t);
+    } else {
+      this.drawWake(ctx, sim.x, sy, v);
+      this.drawFin(ctx, sim.x, finY, v, 1);
+      this.drawSurfer(ctx, sim.x, sy, v);
+    }
     this.drawDrops(ctx, v);
 
     drawVignette(ctx, v.width, v.height, clamp((sim.danger - 0.4) / 0.6, 0, 1) * 0.8, colors.danger, sim.x, sy);
@@ -73,6 +82,8 @@ export class SharkWakeRenderer {
     if (v.idle) this.drawHint(ctx, v);
     ctx.restore();
 
+    ctx.fillStyle = 'rgba(4,24,40,0.55)';
+    ctx.fillRect(8, 598, 108, 36);
     drawText(ctx, this.strings.t('hud.meters', { m: sim.meters }), 16, 616, {
       size: 22,
       color: colors.text,
@@ -98,6 +109,7 @@ export class SharkWakeRenderer {
         });
         this.shake.trigger(v.time, 3, 0.12);
       } else if (e.type === 'boost') {
+        this.kickAt = v.time;
         this.popups.push({
           text: `${this.strings.t('fx.boost')} +${e.points}`,
           x: lx,
@@ -118,7 +130,7 @@ export class SharkWakeRenderer {
         this.shake.trigger(v.time, 9, 0.3);
         this.splash(sim.x, sy, v, 10);
       } else if (e.type === 'wipeout') {
-        this.flash.trigger(v.time, colors.danger, 0.5);
+        this.flash.trigger(v.time, '232,244,255', 0.5);
         this.shake.trigger(v.time, 14, 0.5);
         this.splash(sim.x, sy, v, 22);
       } else if (e.type === 'shore') {
@@ -185,7 +197,8 @@ export class SharkWakeRenderer {
     ctx.strokeStyle = colors.foam;
     ctx.lineWidth = 4;
     ctx.beginPath();
-    for (let x = -20; x <= v.width + 20; x += 20) ctx.lineTo(x, y + 14 + Math.sin(x * 0.2 + v.time * 3) * 3);
+    const wave = v.reducedMotion ? 0 : v.time * 3;
+    for (let x = -20; x <= v.width + 20; x += 20) ctx.lineTo(x, y + 14 + Math.sin(x * 0.2 + wave) * 3);
     ctx.stroke();
   }
 
@@ -278,6 +291,49 @@ export class SharkWakeRenderer {
     ctx.restore();
   }
 
+  private finKick(v: RenderView): number {
+    const t = (v.time - this.kickAt) / 0.5;
+    return t >= 0 && t < 1 ? Math.sin(t * Math.PI) * 26 : 0;
+  }
+
+  /** Surfer knocked off the board, bobbing in foam; the board flips beside them. */
+  private drawTumble(ctx: CanvasRenderingContext2D, x: number, y: number, v: RenderView, t: number): void {
+    const bob = v.reducedMotion ? 0 : Math.sin(v.time * 6) * 2;
+    ctx.strokeStyle = colors.foam;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 30 + t * 10, 20 + t * 6, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(x + 26, y + 10);
+    ctx.rotate(1.2 + (v.reducedMotion ? 0 : t * 2));
+    ctx.fillStyle = colors.board;
+    ctx.strokeStyle = colors.boardEdge;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 11, 30, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = colors.suit;
+    ctx.beginPath();
+    ctx.ellipse(x - 6, y + 4 + bob, 9, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = colors.skin;
+    ctx.beginPath();
+    ctx.arc(x - 6, y - 10 + bob, 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = colors.skin;
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); // waving arms
+    ctx.moveTo(x - 14, y - 2 + bob);
+    ctx.lineTo(x - 24, y - 16 + bob);
+    ctx.moveTo(x + 2, y - 2 + bob);
+    ctx.lineTo(x + 10, y - 18 + bob);
+    ctx.stroke();
+  }
+
   private drawWake(ctx: CanvasRenderingContext2D, x: number, y: number, v: RenderView): void {
     ctx.strokeStyle = 'rgba(232,244,255,0.5)';
     ctx.lineWidth = 3;
@@ -291,10 +347,12 @@ export class SharkWakeRenderer {
   }
 
   /** The fin: dark triangle with a white V wake; a shadow of the body shows when it's close. */
-  private drawFin(ctx: CanvasRenderingContext2D, x: number, y: number, v: RenderView): void {
+  private drawFin(ctx: CanvasRenderingContext2D, x: number, y: number, v: RenderView, alpha: number): void {
+    if (alpha <= 0) return;
+    ctx.globalAlpha = alpha;
     const sway = v.reducedMotion ? 0 : Math.sin(v.time * 5) * 8;
     const fx = x + sway;
-    if (this.sim.danger > 0.5) {
+    if (this.sim.danger > 0.5 && !this.sim.wiped) {
       ctx.fillStyle = `rgba(10,20,30,${0.25 + 0.35 * this.sim.danger})`;
       ctx.beginPath();
       ctx.ellipse(fx, y + 20, 16, 48, 0, 0, Math.PI * 2);
@@ -317,6 +375,7 @@ export class SharkWakeRenderer {
     ctx.fill();
     ctx.fillStyle = colors.finDark;
     ctx.fillRect(fx - 12, y + 8, 26, 4);
+    ctx.globalAlpha = 1;
   }
 
   private drawDrops(ctx: CanvasRenderingContext2D, v: RenderView): void {
@@ -332,14 +391,20 @@ export class SharkWakeRenderer {
   }
 
   private drawPopups(ctx: CanvasRenderingContext2D, v: RenderView): void {
-    for (const p of this.popups) {
+    this.popups.forEach((p, i) => {
+      const stack = this.popups.slice(0, i).filter((q) => Math.abs(q.born - p.born) < 0.15).length;
       const t = (v.time - p.born) / 0.9;
       ctx.globalAlpha = v.reducedMotion ? 1 : 1 - t * t;
-      drawText(ctx, p.text, clamp(p.x, 100, 260), p.y - (v.reducedMotion ? 0 : t * 24), {
-        size: p.big ? 24 : 20,
+      const size = p.big ? 24 : 20;
+      ctx.font = `bold ${size}px ${FONT_STACK}`;
+      const half = Math.min(170, ctx.measureText(p.text).width / 2 + 6);
+      drawText(ctx, p.text, clamp(p.x, half, v.width - half), p.y - stack * 30 - (v.reducedMotion ? 0 : t * 24), {
+        size,
         color: p.color,
+        outline: 'rgba(4,24,40,0.85)',
+        maxWidth: v.width - 12,
       });
-    }
+    });
     ctx.globalAlpha = 1;
   }
 
