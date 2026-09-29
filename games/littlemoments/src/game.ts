@@ -74,6 +74,7 @@ export class LittleMomentsRound implements ScoreAttackRound {
   summary(): Record<string, string | number> {
     return {
       pct: this.sim.towardPct,
+      masters: this.sim.config.benchmarks.masters,
       toward: this.sim.toward,
       missed: this.sim.missed,
       away: this.sim.away,

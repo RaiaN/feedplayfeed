@@ -10,7 +10,7 @@ Make a fast 2D tapping game called Little Moments, portrait for phones. Two frie
 ## 2. Refinement prompts
 1. "Show a bubble and a buzzing phone in the first frame, with a pulsing tap ring on the bubble."
 2. "Make the couple's body language react instantly: lean in on a catch, turn away on a phone tap."
-3. "Add rare big moments (double ring, 'can we talk?') worth triple points that fade faster."
+3. "Add rare big moments (double ring, 'can we talk?') worth over double points that fade faster."
 4. "Add a 2-player couch co-op: each player catches their partner's bubbles; the shared heart is the team score."
 5. "At the end, show a one-line fact: couples who stayed together turned toward 86% of bids."
 

@@ -205,7 +205,7 @@ export class LittleMomentsRenderer {
     const r = big ? 32 : 26;
     const k = m.age / m.life;
     const late = k >= 1 - this.sim.config.scoring.justInTimeFrac;
-    const pop = v.reducedMotion ? 1 : Math.min(1, m.age / 0.12);
+    const pop = v.reducedMotion || v.idle ? 1 : Math.min(1, m.age / 0.12);
     const pulse = late && !v.reducedMotion ? 1 + Math.sin(v.time * 24) * 0.05 : 1;
     const rr = r * pop * pulse;
     // Tail toward the partner (a bid comes from them).

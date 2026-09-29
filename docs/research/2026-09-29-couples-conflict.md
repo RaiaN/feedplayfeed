@@ -23,7 +23,7 @@ The core loop of each game *is* the finding, not a label stuck on it.
 | Finding | Mechanic |
 |---|---|
 | Attack / defend / withdraw escalate the flood | The partner's barbs (4 shapes, one per horseman) fly at you. Each hit raises your heart rate; the water level on screen *is* your heart rate. |
-| Antidotes | Tap a barb to answer it with its antidote. A caption names the skill (Gentle start-up, Appreciation, Take responsibility, Self-soothe). |
+| Antidotes | Tap a barb to answer it with its antidote. A caption names the skill (Soft reply, Appreciation, Take responsibility, Self-soothe). |
 | Repair attempts, and masters accepting them | The partner also sends green repair attempts. Tapping (accepting) one lowers your heart rate and scores big; ignoring it counts as a negative. |
 | Flooding at about 100 bpm: can't think or hear | Above 100 bpm you are flooded: taps fizzle and vision tunnels until you calm down. |
 | Take a break and self-soothe | Hold to breathe: your heart rate falls fast and the fight slows (the break), but the clock keeps running. Knowing *when* to pause is the skill. |
@@ -45,7 +45,7 @@ The core loop of each game *is* the finding, not a label stuck on it.
 - Characters are two stylised, gender-neutral partners.
 - Colour is never the only cue: shapes differ (round bids vs square phones; thorn, eye-roll, shield, brick, heart).
 
-## Addendum: the Ren & Jo series (life situations)
+## Addendum: the Ari & Jo series (life situations)
 | Fact | Source |
 |---|---|
 | The top sources of couple conflict come from *outside* the relationship: money, chores, finding time together, in-laws, parenting (Bradbury & Karney, UCLA). A YouGov survey: tone 39%, money 28%, communication 26%, chores 21%, family/in-laws 20%, parenting 15%. | https://www.psychologytoday.com/us/blog/between-you-and-me/202106/what-do-couples-fight-about , https://www.connectedcouples.app/blog/relationship-conflict-statistics |
@@ -55,4 +55,4 @@ The core loop of each game *is* the finding, not a label stuck on it.
 | Stress-reducing conversation: listen, ask questions and empathise ("It makes sense you feel that"); don't rush to solve. | https://www.vermontpublic.org/vpr-news/2020-04-21/isolating-with-a-partner-relationship-therapists-share-stress-reduction-strategies |
 | Aftermath of a fight: process a regrettable incident from emotional distance, "like an audience". Couples who do this build stronger bonds. | https://www.gottman.com/blog/how-we-used-the-aftermath-of-a-fight-to-repair-our-relationship/ , https://couplestherapyinc.com/aftermath-of-a-fight-the-gottman-model/ |
 
-How these shape the series is in `docs/series/ren-and-jo.md`.
+How these shape the series is in `docs/series/ari-and-jo.md`.

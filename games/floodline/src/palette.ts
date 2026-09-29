@@ -16,7 +16,8 @@ export const colors = {
   defensiveness: '#f0e442',
   stonewalling: '#a3a9b3',
   repair: '#009e73',
-  good: '#009e73',
+  // Lighter bluish green for readable popups on the slate background.
+  good: '#3fd4a4',
   gold: '#f0e442',
   miss: '#b9c0cc',
   text: '#ffffff',

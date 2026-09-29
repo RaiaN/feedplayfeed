@@ -14,7 +14,7 @@ export interface DuoPalette {
 }
 
 export const PEOPLE: Record<Who, { body: string; skin: string; x: number }> = {
-  ren: { body: '#56b4e9', skin: '#f1d3b3', x: 0 },
+  ari: { body: '#56b4e9', skin: '#f1d3b3', x: 0 },
   jo: { body: '#e69f00', skin: '#c68b59', x: 0 },
 };
 
@@ -79,8 +79,8 @@ export class DuoRenderer {
     const a = tilt;
     const dx = (Math.cos(a) * PLANK) / 2;
     const dy = (Math.sin(a) * PLANK) / 2;
-    // Ren on the left rises when the tilt is positive.
-    return { ren: { x: PIVOT.x - dx, y: PIVOT.y - dy }, jo: { x: PIVOT.x + dx, y: PIVOT.y + dy } };
+    // Ari on the left rises when the tilt is positive.
+    return { ari: { x: PIVOT.x - dx, y: PIVOT.y - dy }, jo: { x: PIVOT.x + dx, y: PIVOT.y + dy } };
   }
 
   render(ctx: CanvasRenderingContext2D, v: RenderView): void {
@@ -145,8 +145,8 @@ export class DuoRenderer {
   private drawMeters(ctx: CanvasRenderingContext2D, v: RenderView): void {
     const { sim } = this;
     const max = sim.config.meters.max;
-    for (const who of ['ren', 'jo'] as const) {
-      const left = who === 'ren';
+    for (const who of ['ari', 'jo'] as const) {
+      const left = who === 'ari';
       const val = sim.meters[who] / max;
       const x0 = left ? 58 : 190;
       const w = 112;
@@ -156,7 +156,7 @@ export class DuoRenderer {
       const low = val < 0.25;
       const blink = low && !v.reducedMotion && Math.sin(v.time * 14) < 0;
       ctx.fillStyle = blink ? BAD : PEOPLE[who].body;
-      // Ren's bar grows toward the middle from the left; Jo's from the right.
+      // Ari's bar grows toward the middle from the left; Jo's from the right.
       if (left) ctx.fillRect(x0 + w * (1 - val), y, w * val, 16);
       else ctx.fillRect(x0, y, w * val, 16);
       ctx.strokeStyle = 'rgba(255,255,255,0.7)';
@@ -234,11 +234,11 @@ export class DuoRenderer {
     ctx.lineCap = 'round';
     ctx.setLineDash(warn ? [18, 10] : []);
     ctx.beginPath();
-    ctx.moveTo(ends.ren.x, ends.ren.y);
+    ctx.moveTo(ends.ari.x, ends.ari.y);
     ctx.lineTo(ends.jo.x, ends.jo.y);
     ctx.stroke();
     ctx.setLineDash([]);
-    for (const who of ['ren', 'jo'] as const) {
+    for (const who of ['ari', 'jo'] as const) {
       const p = ends[who];
       // Stand a little inboard of the plank end.
       const x = lerp(p.x, PIVOT.x, 0.12);
@@ -257,7 +257,7 @@ export class DuoRenderer {
     speaking: boolean,
     v: RenderView,
   ): void {
-    const bob = v.reducedMotion ? 0 : Math.sin(v.time * 2.5 + (who === 'ren' ? 0 : 1.7)) * 1.5;
+    const bob = v.reducedMotion ? 0 : Math.sin(v.time * 2.5 + (who === 'ari' ? 0 : 1.7)) * 1.5;
     const slump = level < 0.25 ? 8 : 0;
     ctx.fillStyle = PEOPLE[who].body;
     ctx.beginPath();
@@ -352,7 +352,7 @@ export class DuoRenderer {
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
-    drawText(ctx, this.strings.t('situation.title'), 180, 164, {
+    drawText(ctx, this.strings.t('situation.title'), 180, 80, {
       size: 24,
       color: '#ffffff',
       outline: 'rgba(0,0,0,0.6)',
@@ -380,7 +380,7 @@ export class DuoRenderer {
       glow.addColorStop(1, 'rgba(255,214,150,0)');
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, 360, 640);
-      this.drawPerson(ctx, lerp(110, 158, k), 380, 'ren', 0.9, false, v);
+      this.drawPerson(ctx, lerp(110, 158, k), 380, 'ari', 0.9, false, v);
       this.drawPerson(ctx, lerp(250, 202, k), 380, 'jo', 0.9, false, v);
       ctx.fillStyle = BAD;
       for (let i = 0; i < 3; i++) {
@@ -398,7 +398,7 @@ export class DuoRenderer {
       ctx.beginPath();
       ctx.arc(192, 295, 4, 0, Math.PI * 2);
       ctx.fill();
-      this.drawPerson(ctx, lerp(120, 70, k), 380, 'ren', sim.meters.ren / sim.config.meters.max, false, v);
+      this.drawPerson(ctx, lerp(120, 70, k), 380, 'ari', sim.meters.ari / sim.config.meters.max, false, v);
       this.drawPerson(ctx, lerp(240, 290, k), 380, 'jo', sim.meters.jo / sim.config.meters.max, false, v);
     }
     const lines = wrapText(ctx, this.strings.t(best ? 'scene.best' : 'scene.worst'), 22, 320, 3);

@@ -8,7 +8,7 @@ Research basis: `docs/research/2026-09-29-couples-conflict.md` ("The Flood" figh
 | Template | score-attack (the round ends early if you're flooded out) |
 | Target channels, in order | fbinstant → devvit → portals; Horizon rebuild candidate |
 | One-line hook (≤12 words) | Keep your cool: answer every barb before your heart floods. |
-| First 3 seconds | Two people facing off across a room. A spiky barb and a shield are already flying at you, with a pulsing tap ring on the nearest. A dashed yellow "100 bpm" flood line sits above the water at your feet. Tap: "Gentle start-up +40" and a small heart floats back to your partner. |
+| First 3 seconds | Two people facing off across a room. A spiky barb and a shield are already flying at you, with a pulsing tap ring on the nearest. A dashed yellow "100 bpm" flood line sits above the water at your feet. Tap: "Soft reply +40" and a small heart floats back to your partner. |
 | Core loop (verbs) | tap barbs (answer with the antidote) → accept repairs → notice flooding → hold to breathe → back in |
 | Controls | One thumb: tap to answer or accept; press and hold anywhere empty to take a breather |
 | Round length | 60 s, or until your pulse hits 150 (flooded out) |

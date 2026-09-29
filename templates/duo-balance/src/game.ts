@@ -54,7 +54,7 @@ export class DuoRound implements ScoreAttackRound {
 
   step(dt: number, thumb: Thumb): void {
     this.sim.step(dt, thumb);
-    const low = Math.min(this.sim.meters.ren, this.sim.meters.jo) / this.sim.config.meters.max;
+    const low = Math.min(this.sim.meters.ari, this.sim.meters.jo) / this.sim.config.meters.max;
     this.heart.update(dt, this.sim.ended || low > 0.3 ? 0 : lerp(170, 90, low / 0.3));
     const s = this.sound;
     for (; this.heard < this.sim.events.length; this.heard++) {
@@ -86,7 +86,7 @@ export class DuoRound implements ScoreAttackRound {
   summary(): Record<string, string | number> {
     const who = this.sim.brokeWho;
     return {
-      ren: Math.round(this.sim.meters.ren),
+      ari: Math.round(this.sim.meters.ari),
       jo: Math.round(this.sim.meters.jo),
       balanced: this.sim.balancedPct,
       good: this.sim.good,

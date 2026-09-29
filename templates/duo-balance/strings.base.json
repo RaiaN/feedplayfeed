@@ -1,5 +1,5 @@
 {
-  "name.ren": "Ren",
+  "name.ari": "Ari",
   "name.jo": "Jo",
   "hud.beat": "Beat {score}",
   "hud.balanced": "In balance {pct}%",
@@ -14,7 +14,7 @@
   "tag.appreciation": "Appreciation",
   "tag.repair": "Repair",
   "tag.soothe": "Self-soothe",
-  "tag.flooding": "Flooding",
+  "tag.flooding": "Ignored flooding",
   "tag.influence": "Accepted influence",
   "tag.standoff": "Standoff",
   "tag.dream": "Asked about the dream",

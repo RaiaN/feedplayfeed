@@ -1,8 +1,8 @@
-// Duo-balance: the "Ren & Jo" couple series. One couple, many life situations; each situation is its own game.
+// Duo-balance: the "Ari & Jo" couple series. One couple, many life situations; each situation is its own game.
 // The player answers for both partners with quick left/right choices. Every option moves ONE partner's
 // "feels loved" meter up or down. Keep both up and in balance until the situation ends.
 
-export type Who = 'ren' | 'jo';
+export type Who = 'ari' | 'jo';
 
 /** Research label shown after a choice (strings.json key `tag.<tag>`). */
 export type Tag =
@@ -54,7 +54,7 @@ export interface DuoConfig {
   roundSeconds: number;
   meters: { start: number; max: number; drainStart: number; drainEnd: number; timeout: number };
   cards: { timerStart: number; timerEnd: number; gap: number; climaxTimer: number };
-  /** |ren − jo| ≥ tipAt for tipSeconds in a row = the relationship tips over. */
+  /** |ari − jo| ≥ tipAt for tipSeconds in a row = the relationship tips over. */
   balance: { tipAt: number; tipSeconds: number; balancedWithin: number };
   scoring: {
     positive: number;
@@ -64,6 +64,8 @@ export interface DuoConfig {
     streakPerLevel: number;
     maxMultiplier: number;
     finishBonus: number;
+    /** Points multiplier on the climax card. */
+    climaxMultiplier: number;
   };
 }
 

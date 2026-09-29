@@ -54,18 +54,23 @@ export class DuoSim {
   private gapLeft = 0.25;
   private cardCount = 0;
   private deck: CardDef[] = [];
-  private lastId = '';
+  private lastDeckId = '';
+  private deckDrawn = 0;
   private climaxDone = false;
   private balancePoints = 0;
-  private readonly rng: Rng;
+  /** Independent streams so the deck order and layouts never depend on answer speed or the climax timing. */
+  private readonly deckRng: Rng;
+  private readonly flipRng: Rng;
 
   constructor(
     readonly config: DuoConfig,
     readonly situation: Situation,
     readonly seed: string,
   ) {
-    this.rng = createRng(seed).fork(`duo:${situation.id}`);
-    this.meters = { ren: config.meters.start, jo: config.meters.start };
+    const root = createRng(seed).fork(`duo:${situation.id}`);
+    this.deckRng = root.fork('deck');
+    this.flipRng = root.fork('flip');
+    this.meters = { ari: config.meters.start, jo: config.meters.start };
     this.nextCard(); // frame 1 already shows the first moment
   }
 
@@ -85,9 +90,9 @@ export class DuoSim {
     return Math.floor(this.time + 1e-9);
   }
 
-  /** ren − jo. Positive = Ren is up, Jo is down. */
+  /** ari − jo. Positive = Ari is up, Jo is down. */
   get diff(): number {
-    return this.meters.ren - this.meters.jo;
+    return this.meters.ari - this.meters.jo;
   }
 
   get balancedPct(): number {
@@ -118,7 +123,7 @@ export class DuoSim {
     this.time += dt;
 
     const drain = lerp(c.meters.drainStart, c.meters.drainEnd, this.progress) * dt;
-    this.meters.ren -= drain;
+    this.meters.ari -= drain;
     this.meters.jo -= drain;
 
     if (this.card) {
@@ -141,9 +146,9 @@ export class DuoSim {
     }
     this.tipFor = d >= c.balance.tipAt ? this.tipFor + dt : 0;
 
-    for (const who of ['ren', 'jo'] as const) this.meters[who] = clamp(this.meters[who], 0, c.meters.max);
-    if (this.meters.ren <= 0 || this.meters.jo <= 0) {
-      this.brokeWho = this.meters.ren <= 0 ? 'ren' : 'jo';
+    for (const who of ['ari', 'jo'] as const) this.meters[who] = clamp(this.meters[who], 0, c.meters.max);
+    if (this.meters.ari <= 0 || this.meters.jo <= 0) {
+      this.brokeWho = this.meters.ari <= 0 ? 'ari' : 'jo';
       return this.finish('broke');
     }
     if (this.tipFor >= c.balance.tipSeconds) return this.finish('tipped');
@@ -160,7 +165,8 @@ export class DuoSim {
       this.good++;
       this.streak++;
       this.multiplier = Math.min(s.maxMultiplier, 1 + Math.floor(this.streak / s.streakPerLevel));
-      points = (s.positive + (justInTime ? s.justInTime : 0)) * this.multiplier * (card.climax ? 2 : 1);
+      points =
+        (s.positive + (justInTime ? s.justInTime : 0)) * this.multiplier * (card.climax ? s.climaxMultiplier : 1);
       this.score += points;
     } else {
       this.bad++;
@@ -202,23 +208,30 @@ export class DuoSim {
       if (this.deck.length === 0) this.deck = this.shuffle();
       def = this.deck.shift()!;
     }
-    this.lastId = def.id;
     const n = this.cardCount++;
     const timer = climax ? c.cards.climaxTimer : lerp(c.cards.timerStart, c.cards.timerEnd, this.progress);
-    // The very first card keeps its authored layout (the tutorial hint points at it).
-    this.card = { n, def, flip: n === 0 ? false : this.rng.chance(0.5), climax, timer, age: 0 };
+    // Layout: the first card and the climax keep their authored layout; the k-th deck card always gets the
+    // k-th flip from its own stream, so every challenger sees identical cards in identical positions.
+    let flip = false;
+    if (!climax) {
+      const k = this.deckDrawn++;
+      const f = this.flipRng.chance(0.5);
+      flip = k === 0 ? false : f;
+      this.lastDeckId = def.id;
+    }
+    this.card = { n, def, flip, climax, timer, age: 0 };
     this.events.push({ type: 'card', time: this.time, n, id: def.id, climax });
   }
 
   /** Seeded shuffle; the first card of a new deck never repeats the last one shown. The first deck keeps card 0 first. */
   private shuffle(): CardDef[] {
-    const first = this.cardCount === 0 ? this.situation.cards[0] : undefined;
+    const first = this.deckDrawn === 0 ? this.situation.cards[0] : undefined;
     const rest = this.situation.cards.filter((c) => c !== first);
     for (let i = rest.length - 1; i > 0; i--) {
-      const j = this.rng.int(0, i);
+      const j = this.deckRng.int(0, i);
       [rest[i], rest[j]] = [rest[j]!, rest[i]!];
     }
-    if (rest[0]?.id === this.lastId && rest.length > 1) [rest[0], rest[1]] = [rest[1]!, rest[0]!];
+    if (rest[0]?.id === this.lastDeckId && rest.length > 1) [rest[0], rest[1]] = [rest[1]!, rest[0]!];
     return first ? [first, ...rest] : rest;
   }
 

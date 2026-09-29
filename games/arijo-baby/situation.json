@@ -1,0 +1,301 @@
+{
+  "id": "baby",
+  "backdrop": "baby",
+  "climaxAt": 0.62,
+  "cards": [
+    {
+      "id": "b1",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 11,
+        "tag": "need"
+      },
+      "right": {
+        "who": "jo",
+        "delta": 11,
+        "tag": "need"
+      }
+    },
+    {
+      "id": "b2",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "toward"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -12,
+        "tag": "away"
+      }
+    },
+    {
+      "id": "b3",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "responsibility"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -14,
+        "tag": "defensiveness"
+      }
+    },
+    {
+      "id": "b4",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 14,
+        "tag": "soothe"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -12,
+        "tag": "standoff"
+      }
+    },
+    {
+      "id": "b5",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "influence"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -16,
+        "tag": "contempt"
+      }
+    },
+    {
+      "id": "b6",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 16,
+        "tag": "toward"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -16,
+        "tag": "away"
+      }
+    },
+    {
+      "id": "b7",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "influence"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -14,
+        "tag": "standoff"
+      }
+    },
+    {
+      "id": "b8",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 11,
+        "tag": "need"
+      },
+      "right": {
+        "who": "ari",
+        "delta": 10,
+        "tag": "need"
+      }
+    },
+    {
+      "id": "b9",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 14,
+        "tag": "repair"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -16,
+        "tag": "criticism"
+      }
+    },
+    {
+      "id": "b10",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 12,
+        "tag": "repair"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -14,
+        "tag": "stonewalling"
+      }
+    },
+    {
+      "id": "b11",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 11,
+        "tag": "need"
+      },
+      "right": {
+        "who": "jo",
+        "delta": 10,
+        "tag": "need"
+      }
+    },
+    {
+      "id": "b12",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 12,
+        "tag": "toward"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -16,
+        "tag": "defensiveness"
+      }
+    },
+    {
+      "id": "b13",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "toward"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -10,
+        "tag": "away"
+      }
+    },
+    {
+      "id": "b14",
+      "speaker": "jo",
+      "left": {
+        "who": "ari",
+        "delta": 12,
+        "tag": "gentle"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -15,
+        "tag": "contempt"
+      }
+    },
+    {
+      "id": "b15",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 12,
+        "tag": "appreciation"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -12,
+        "tag": "shallows"
+      }
+    },
+    {
+      "id": "b16",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 13,
+        "tag": "soothe"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -14,
+        "tag": "flooding"
+      }
+    },
+    {
+      "id": "b17",
+      "speaker": "ari",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "gentle"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -14,
+        "tag": "criticism"
+      }
+    },
+    {
+      "id": "b18",
+      "speaker": "ari",
+      "left": {
+        "who": "ari",
+        "delta": 14,
+        "tag": "repair"
+      },
+      "right": {
+        "who": "ari",
+        "delta": -12,
+        "tag": "criticism"
+      }
+    },
+    {
+      "id": "b19",
+      "speaker": "jo",
+      "left": {
+        "who": "ari",
+        "delta": 11,
+        "tag": "need"
+      },
+      "right": {
+        "who": "jo",
+        "delta": 11,
+        "tag": "need"
+      }
+    },
+    {
+      "id": "b20",
+      "speaker": "jo",
+      "left": {
+        "who": "jo",
+        "delta": 12,
+        "tag": "toward"
+      },
+      "right": {
+        "who": "jo",
+        "delta": -12,
+        "tag": "away"
+      }
+    }
+  ],
+  "climax": {
+    "id": "bx",
+    "speaker": "jo",
+    "left": {
+      "who": "jo",
+      "delta": 24,
+      "tag": "toward"
+    },
+    "right": {
+      "who": "jo",
+      "delta": -18,
+      "tag": "shallows"
+    }
+  }
+}

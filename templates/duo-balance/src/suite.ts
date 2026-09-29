@@ -1,4 +1,4 @@
-// Shared Vitest suite for every Ren & Jo situation game: call runSituationSuite() from games/<slug>/src/*.test.ts.
+// Shared Vitest suite for every Ari & Jo situation game: call runSituationSuite() from games/<slug>/src/*.test.ts.
 import type { Thumb } from '@feedplay/template-score-attack';
 import { TEMPLATE_STRING_KEYS } from '@feedplay/template-score-attack';
 import { describe, expect, it } from 'vitest';
@@ -46,22 +46,28 @@ export function runSituationSuite(
       expect(a.score).toBe(b.score);
     });
 
-    it('the cards you get (and their left/right layout) do not depend on your answers', () => {
-      const seq = (s: DuoSim) => s.events.flatMap((e) => (e.type === 'card' && !e.climax ? [e.id] : [])).slice(0, 10);
-      const bot = playBot(config, situation, 'fair');
-      const lefty = new DuoSim(config, situation, 'fair');
-      let flips: boolean[] = [];
-      for (let i = 0; i < 3000 && !lefty.ended; i++) {
-        const c = lefty.card;
-        if (c && c.age > 0.5) {
-          flips.push(c.flip);
-          lefty.step(DT, tap('l'));
-        } else lefty.step(DT, idle);
-      }
-      expect(seq(lefty)).toEqual(seq(bot).slice(0, seq(lefty).length));
-      expect(seq(lefty).length).toBeGreaterThanOrEqual(6);
-      flips = flips.slice(0, 6);
-      expect(flips.length).toBe(6);
+    it('the cards you get and their left/right layout do not depend on how fast or how you answer', () => {
+      // Record (id, flip) for every deck card, for a fast always-left player and a slow always-right player.
+      const record = (drive: (s: DuoSim) => Thumb): string[] => {
+        const s = new DuoSim(config, situation, 'fair');
+        const seen: string[] = [];
+        let last = -1;
+        for (let i = 0; i < config.roundSeconds / DT && !s.ended; i++) {
+          const c = s.card;
+          if (c && c.n !== last) {
+            last = c.n;
+            if (!c.climax) seen.push(`${c.def.id}:${c.flip}`);
+          }
+          s.meters = { ari: 50, jo: 50 }; // keep playing the whole round regardless of answers
+          s.step(DT, drive(s));
+        }
+        return seen;
+      };
+      const fast = record((s) => (s.card && s.card.age > 0.3 ? tap('l') : idle));
+      const slow = record((s) => (s.card && s.card.age > 1.4 ? tap('r') : idle));
+      const n = Math.min(fast.length, slow.length);
+      expect(n).toBeGreaterThanOrEqual(15);
+      expect(slow.slice(0, n)).toEqual(fast.slice(0, n));
     });
   });
 
@@ -71,7 +77,7 @@ export function runSituationSuite(
       const opt = sim.shown('l')!;
       const before = { ...sim.meters };
       sim.step(DT, tap('l'));
-      const other = opt.who === 'ren' ? 'jo' : 'ren';
+      const other = opt.who === 'ari' ? 'jo' : 'ari';
       const drain = before[other] - sim.meters[other];
       expect(drain).toBeGreaterThan(0);
       expect(sim.meters[opt.who]).toBeCloseTo(Math.min(config.meters.max, before[opt.who] + opt.delta) - drain, 5);
@@ -87,9 +93,9 @@ export function runSituationSuite(
 
     it('a one-sided relationship tips over (worst case)', () => {
       const sim = new DuoSim(config, situation, 'tip');
-      sim.meters = { ren: 95, jo: 95 - config.balance.tipAt - 5 };
+      sim.meters = { ari: 95, jo: 95 - config.balance.tipAt - 5 };
       for (let i = 0; i < (config.balance.tipSeconds + 0.2) / DT && !sim.ended; i++) {
-        sim.meters.ren = 95;
+        sim.meters.ari = 95;
         sim.step(DT, idle);
       }
       expect(sim.outcome).toBe('tipped');
@@ -123,6 +129,31 @@ export function runSituationSuite(
   });
 
   describe(`${name}: content`, () => {
+    it('card text fits: prompts ≤ 56 chars, answers ≤ 20 chars (2 lines on the button)', () => {
+      for (const c of [...situation.cards, situation.climax]) {
+        expect(strings[`card.${c.id}`]!.length, c.id).toBeLessThanOrEqual(56);
+        for (const k of ['l', 'r'])
+          expect(strings[`card.${c.id}.${k}`]!.length, `${c.id}.${k}`).toBeLessThanOrEqual(20);
+      }
+    });
+
+    it('the first card rewards any first tap (both answers are kind)', () => {
+      const first = situation.cards[0]!;
+      expect(first.left.delta > 0 && first.right.delta > 0).toBe(true);
+    });
+
+    it('both partners get to be the hurt one and the one who slips', () => {
+      const speakers = situation.cards.map((c) => c.speaker);
+      expect(speakers.filter((w) => w === 'ari').length).toBeGreaterThanOrEqual(5);
+      expect(speakers.filter((w) => w === 'jo').length).toBeGreaterThanOrEqual(5);
+      const hurt = (who: 'ari' | 'jo') =>
+        situation.cards.filter(
+          (c) => c.left.who === who && c.right.who === who && Math.min(c.left.delta, c.right.delta) < 0,
+        ).length;
+      expect(hurt('ari')).toBeGreaterThanOrEqual(4);
+      expect(hurt('jo')).toBeGreaterThanOrEqual(4);
+    });
+
     it('strings define every card, option, tag, scene and template key', () => {
       const keys = [
         ...TEMPLATE_STRING_KEYS,
@@ -130,7 +161,7 @@ export function runSituationSuite(
         'end.survived',
         'end.broke',
         'end.tipped',
-        'name.ren',
+        'name.ari',
         'name.jo',
       ];
       const missing = keys.filter((k) => !(k in strings));

@@ -13,7 +13,7 @@ export function createDuoBot(seed: string): (sim: DuoSim) => { held: boolean; x:
     if (!o) return -Infinity;
     const m = { ...sim.meters };
     m[o.who] += o.delta;
-    return Math.min(m.ren, m.jo) - Math.abs(m.ren - m.jo) * 0.35;
+    return Math.min(m.ari, m.jo) - Math.abs(m.ari - m.jo) * 0.35;
   };
   return (sim) => {
     if (tapped) {

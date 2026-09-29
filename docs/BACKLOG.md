@@ -99,9 +99,9 @@ Each "Session" block is roughly one cloud session, meant to fit a Max 5x 5-hour 
 ## Couples track (2026-09-29)
 - [x] Couples research brief with sources: `docs/research/2026-09-29-couples-conflict.md`
 - [x] `games/littlemoments` (bids for connection, 86% vs 33%) and `games/floodline` (flooding, horsemen and antidotes, repair, 5:1)
-- [x] `templates/duo-balance` plus the Ren & Jo series bible `docs/series/ren-and-jo.md`
-- [x] Situations: `renjo-moving`, `renjo-money`, `renjo-baby`
-- [ ] Next situations: `renjo-holiday` (in-laws, the Chasm), `renjo-busy` (the Shallows), `renjo-job`, `renjo-sick`, `renjo-aftermath`
+- [x] `templates/duo-balance` plus the Ari & Jo series bible `docs/series/ari-and-jo.md`
+- [x] Situations: `arijo-moving`, `arijo-money`, `arijo-baby`
+- [ ] Next situations: `arijo-holiday` (in-laws, the Chasm), `arijo-busy` (the Shallows), `arijo-job`, `arijo-sick`, `arijo-aftermath`
 - [ ] Playtest the text-card readability vs the 3-second rule; tune timers
 
 ## Concept seeds

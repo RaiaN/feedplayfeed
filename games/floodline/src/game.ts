@@ -81,6 +81,7 @@ export class FloodLineRound implements ScoreAttackRound {
   summary(): Record<string, string | number> {
     return {
       ratio: this.sim.ratio.toFixed(1),
+      goal: this.sim.config.scoring.masterRatio,
       positives: this.sim.positives,
       negatives: this.sim.negatives,
       antidotes: this.sim.antidotes,

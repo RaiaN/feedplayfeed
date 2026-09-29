@@ -23,7 +23,6 @@ export class FloodLineRenderer {
   private seen = 0;
   private popups: Popup[] = [];
   private returned: Returned[] = [];
-  private seenFlood = false;
   private readonly shake = new Shake();
   private readonly flash = new Flash();
 
@@ -118,7 +117,6 @@ export class FloodLineRenderer {
           born: v.time,
           big: true,
         });
-        this.seenFlood = true;
       } else if (e.type === 'calm') {
         this.popups.push({
           text: this.strings.t('fx.calm'),
@@ -373,7 +371,7 @@ export class FloodLineRenderer {
   private drawHoldHint(ctx: CanvasRenderingContext2D, v: RenderView): void {
     const you = this.sim.config.you;
     const x = you.x;
-    const y = you.y + 80;
+    const y = you.y + 45;
     ctx.fillStyle = colors.text;
     ctx.beginPath();
     ctx.arc(x, y, 11, 0, Math.PI * 2);
@@ -388,7 +386,6 @@ export class FloodLineRenderer {
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
-    if (!this.seenFlood) return;
   }
 
   private drawHud(ctx: CanvasRenderingContext2D): void {
